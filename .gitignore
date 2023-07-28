@@ -5,4 +5,8 @@
 
 /.quarto/
 
+original/
+html/
+_site/
+
 .DS_STORE

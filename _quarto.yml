@@ -3,36 +3,32 @@ project:
 
 website:
   title: "Transitional Justice Research Collaborative"
-  navbar:
-    # logo: images/tjrc.jpg
+  navbar: 
     left:
       - href: index.qmd
-        text: Home
-      - href: browse.qmd
-        text: Browse
+        text: "Home"
+      # - href: browse.qmd
+      #   text: "Browse"
       - href: download.qmd
-        text: Download
+        text: "Download"
       - href: findings.qmd
-        text: Findings
+        text: "Findings"
       - href: faq.qmd
-        text: FAQ
-      - href: feedback.qmd
-        text: Feedback
+        text: "FAQ"
+      # - href: feedback.qmd
+      #   text: "Feedback"
       - href: about.qmd
-        text: About
+        text: "About"
       - href: people.qmd
-        text: People
+        text: "People"
       - href: links.qmd
-        text: Links
+        text: "Links"
 
 format:
   html:
     theme: cosmo
     css: styles.css
     toc: true
-    # title-block-banner: images/tjrc.jpg
-    # title-block-style: default
-    # include-in-header: html/header.html
 
 editor: visual
 
