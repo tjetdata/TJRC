@@ -15,8 +15,8 @@ website:
         text: "Findings"
       - href: faq.qmd
         text: "FAQ"
-      # - href: feedback.qmd
-      #   text: "Feedback"
+      - href: feedback.qmd
+        text: "Feedback"
       - href: about.qmd
         text: "About"
       - href: people.qmd

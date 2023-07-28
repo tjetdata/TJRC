@@ -1,3 +1,51 @@
 ---
 title: "Download"
 ---
+
+**NOTE:** The data on TJRC are not all downloadable at once. TJRC researchers make various datasets to answer particular questions, and then we release those for replication and reuse. To understand in greater detail, see this excerpt from Geoff Dancy and Kathryn Sikkink, "The Data of Transitional Justice." In preparation for *The Oxford Handbook of Transitional Justice*.
+
+"What does the final database look like? This is a question worth answering because it is the source of misunderstanding. The TJRC database is not exclusively quantitative. It is also not frozen; instead, it sits in constant flux between being and becoming. For technical researchers, the database is a relational MySQL data matrix comprised of many rows and columns that sits on an online server. It contains tens of thousands of discrete pieces of information, some words and some numbers, which are separated from each other by commas. For qualitative researchers, the database also contains a wealth of narrative information about such issues as the historical origins of transitional justice policies, the names of victims and the accused in prosecutions, the scope of amnesty policies, and the mandate of the truth commissions. These data can be viewed with a built-in browse function.
+
+TJRC researchers have sampled from the main database to compile offshoot events-history datasets that use additive count measures within each country-year,. This provides much richer information about the actual number of prosecutions, amnesties, truth commissions, and reparations policies in a country (Dancy et al. 2019). These data sets also include information on the quality and outcomes of the processes. For example, we are exploring various ways to measure the robustness of truth commissions based on various observable properties of each body. This would produce something like a truth commission performance indicator" that captures variation in quality across cases.
+
+The TJRC developed a relational database because of the sheer amount and variety of information that needed to be handled. There are different ways of sampling countries (democratic or post-conflict transitions), different mechanisms, and different outcomes of interest (repressive violence, democratic consolidation, etc.). With relational data, all of these data can be kept in separate rooms within the same house, and brought together when and if it is time to meet.
+
+The drawback of the relational approach is that it is non-intuitive and difficult to understand. One common misconception is that the database has one single structure with unchanging content. Scholars often write to ask for a copy of the TJRC dataset, an understandable request that is also unfulfillable, technically speaking, since the database is a digitally housed collection of many datasets that can be queried to create any number of data files. This means that we have to respond to interested researchers with a question: what data would you like? Often, though, they just want to peruse, or scroll through, the data. For this reason, the TJRC's web developers created tabbed filters that allow users to browse that data. One can automatically filter the database to view mechanisms by country, year, regime, civil war context, and crimes covered. Still, users' most common impulse is to ask for a single complete dataset that they can view in their most preferred applications. One does not exist---nor does a single master list, or count, of transitional justice processes. What does exist, instead, are a series of data sets that the TJRC project members have sampled, extracted, and frozen in particular moments for the purpose of analysis.
+
+The benefit of the relational approach to database creation---wherein a variety of pieces of information are stored online and wait for the user to fit them into a structure---is that it allows the data to remain flexible, and adaptable to purpose. One can design a data set to answer specific questions, e.g. Does holding more human rights prosecutions amid civil war prolong hostilities? To answer this question, one must query the database to provide list of cases in which civil war is ongoing, and accompany that list with a quantitative indicator of how many prosecutions occur amid fighting (see Dancy and Wiebelhaus-Brahm 2018). In another example, the TJRC collected data on over 6,000 records on domestic criminal prosecutions, but in our most extensive study on the impact of transitional justice in democratizing states, we include information on only 555 trials. This pruning was theory-driven. The point of this study was to analyze the impact on future patterns of repressive violence caused by more extensive efforts at prosecuting former state agents after a democratic transition (Dancy et al. 2019). So we had to select in only those prosecutions based on context (following democratic transition), accused (whether they were state agents in the previous regime), harms (which must be human rights violations), and evidentiary validity (whether the trial event was verified by two or more sources). Theory-driven dataset generation of this type allows for the most accurate analyses of research questions. Too often in social science, scholars allow data availability to guide inquiry; one answers questions for which one possesses reliable data. This may limit progress because it means that scholars continue to pick over the same data to find minor relationships (Schrodt 2014). Overcoming this problem in the future means unfreezing information and allowing research questions to guide data set creation."
+
+*Cited Research:*
+
+Dancy, Geoff, and Eric Wiebelhaus-Brahm. 2018. "The Impact of Criminal Prosecutions during Intrastate Conflict." *Journal of Peace Research* 55 (1): 47--61.
+
+Dancy, Geoff, Bridget Marchesi, Tricia Olsen, Leigh A. Payne, Andrew Reiter, and Kathryn Sikkink. 2019. "Behind Bars and Bargains: New Findings on Transitional Justice in Emerging Democracies." Forthcoming, *International Studies Quarterly*.
+
+Schrodt, Philip A. 2014. "Seven Deadly Sins of Contemporary Quantitative Political Analysis." *Journal of Peace Research* 51(2): 287-300.
+
+## Replication Data
+
+Below are the replication data for our most recent publications. They do not include the full spectrum of data availalbe to browse or query, but they are tailored to specific research questions that we have. If you would like data to answer a specific research question, email Geoff Dancy at **gdancy\@tulane.edu** for more information.
+
+Dancy, Geoff, Bridget Marchesi, Tricia Olsen, Leigh A. Payne, Andrew Reiter, and Kathryn Sikkink. 2019. "Behind Bars and Bargains: New Findings on Transitional Justice in Emerging Democracies" Forthcoming, *International Studies Quarterly*.
+
+\[[Data](https://drive.google.com/file/d/1-Z3xW9_4GwbtgVOrBNfzv5b_s4SFPI4H/view?usp=sharing%22)\] \[[Figure 1 Data](https://drive.google.com/file/d/1zlXz2bOl_c6-GyEPnUeZJHfiJ7EW_sD9/view?usp=sharing)\] \[[STATA do file](https://drive.google.com/file/d/10eXXqLYUk3op3stKRbAnimK2_wvT7xEk/view?usp=sharing)\] \[[Replication memo](https://drive.google.com/file/d/1w1jUpfu-JP8PqMmZcdRwslMwyFYoBAz3/view?usp=sharing)\]
+
+## Citation of Browse Data
+
+When using any of the data drawn directly from this website, please cite to the following:
+
+Dancy, Geoff, Francesca Lessa, Bridget Marchesi, Leigh A. Payne, Gabriel Pereira, and Kathryn Sikkink. 2014. "The Transitional Justice Research Collaborative Dataset" Available at \<www.transitionaljusticedata.com\>. Accessed *date*.
+
+## Coding Manuals
+
+Democratic Transitions, 1970-2010: [pdf](https://www.transitionaljusticedata.com/files/demo%20transitions.pdf)
+
+Domestic Criminal Prosecutions Coding Manual: [pdf](https://www.transitionaljusticedata.com/files/Trials%20Coding%20Manual.pdf) 
+
+Amnesty Coding Manual: [pdf](https://www.transitionaljusticedata.com/files/Amnesty%20Coding%20Manual.pdf) 
+
+Truth Commission Coding Manual: [pdf](https://www.transitionaljusticedata.com/files/Truth%20Commission%20Coding%20Manual.pdf)
+
+## Feedback and Corrections
+
+The Collaborative welcomes and encourages [Feedback](https://www.transitionaljusticedata.com/feedback) from country experts. With such feedback, we hope to continue to improve the currently available data. We will review your comments, research them, verify them, and make emendations if necessary.
