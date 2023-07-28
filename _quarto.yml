@@ -29,6 +29,8 @@ format:
     theme: cosmo
     css: styles.css
     toc: true
-
+    # include-after-body: 
+    #   file: "_footer.qmd"
+      
 editor: visual
 

@@ -4,8 +4,6 @@ title: "Project Members"
 
 ## Principal Investigators
 
-**Principal Investigators**
-
 ::: columns
 ::: {.column width="45%"}
 [United Kingdom]{.underline}
@@ -27,8 +25,6 @@ title: "Project Members"
 :::
 
 ## Project Leaders
-
-**Project Leaders**
 
 ::: columns
 ::: {.column width="45%"}
@@ -55,207 +51,44 @@ title: "Project Members"
 
 ## Team Members
 
-**Team Members**
-
 ::: columns
 ::: {.column width="45%"}
 [University of Oxford]{.underline}
 
-Emily Braid (2011-2012) \
-Pierre Le Goff (2012-2013) \
-Gabriel Pereira (2012-2014) \
-Nicola Palmer (2010-2011) \
+Emily Braid (2011-2012)\
+Pierre Le Goff (2012-2013)\
+Gabriel Pereira (2012-2014)\
+Nicola Palmer (2010-2011)\
 
 [Mount Holyoke College]{.underline}
 
-Mata Checko (2014) \
-Sara Ellis (2014) \
-Ava Gurekian (2014) \
-Meghan Guptill (2013-2014) \
-Denise Huang (2014) \
-Sidonie Le Youdec (2014) \
-Alexis Marek (2013) \
-Emma Murphy (2013) \
-Sasha Pohle-Anderson (2014) \
-Erika Tannor (2013-2014) \
-Emma Walters (2013) \
+Mata Checko (2014)\
+Sara Ellis (2014)\
+Ava Gurekian (2014)\
+Meghan Guptill (2013-2014)\
+Denise Huang (2014)\
+Sidonie Le Youdec (2014)\
+Alexis Marek (2013)\
+Emma Murphy (2013)\
+Sasha Pohle-Anderson (2014)\
+Erika Tannor (2013-2014)\
+Emma Walters (2013)\
 
-:::
+[John Jay College of Criminal Justice]{.underline}
 
-::: {.column width="10%"}
-<!-- empty column to create gap -->
-:::
+Veronica Michel (2011-2012)\
 
-::: {.column width="45%"}
-[University of Minnesota]{.underline}
+[Macalaster College]{.underline}
 
-Alec Albright (2011-2013) \
-Brooke Coe (2012-2013) \
-Emalie Coplan (2011-2012) \
-Holly Dunn (2013-2014) \
-Grace Fiddler (2010-2012) \
-Katherine Franzel (2013) \
-Marie-Christine Ghreichi (2012-13) \
-Katrina Heimark (2013-2014) \
-Daniel Johnson (2013) \
-Meagan Johnson (2010-2012) \
-Maggie Loeffelholz (2011-2012) \
-Cameron Mailhot (2013) \
-Florencia Montal (2013-2014) \
-Zachary Payne-Meili (2010-2012) \
-Farrah Tek (2013-2014) \
-Marcela Villarrazo (2012-2014) \
+Stephanie Fenner (2010-2012)\
 
-:::
-:::
+[Loyola University Maryland]{.underline}
 
-
-
-
-
-
-
-
-
-*John Jay College of Criminal Justice*
-Veronica Michel (2011-2012) \
-
-*Macalaster College*
-Stephanie Fenner (2010-2012) \
-
-*Loyola University Maryland*
-Moira Lynch (2011-2012) \
-
-*University of Wisconsin-Madison*
-Allie Frankel (2010-2012) \
-
-
-
-
-*Tulane University*
-Catherine Perrone (2014) \
-Phoebe Shepherd (2015) \
-Idean Ben-Yakir (2015) \
-Jamie Campbell (2015) \
-Ezra Spira-Cohen (2015) \
-Weishe Jiang (2016) \
-Tess Martin (2016-18) \
-Joseph Sotile (2017-18) \
-Halley Wolin (2018) \
-Catherine Grayson (2018) \
-
-
-
-
-
-
-
-
-
-
-## Consultants
-
-**Consultants**
-
-::: columns
-::: {.column width="45%"}
-
-Geoff Dancy (2013-Present) \
-*Tulane University*
-
-Veronica Michel (2012-Present) \
-*John Jay College of Criminal Justice*
-
-Tricia Olsen (2010-Present) \
-*University of Denver*
-
-:::
-
-::: {.column width="10%"}
-<!-- empty column to create gap -->
-:::
-
-::: {.column width="45%"}
-
-Hunjoon Kim (2010-Present) \
-*Griffith University*
-
-
-Moira Lynch (2012-Present) \
-*Loyola University Maryland*
-
-
-Andrew Reiter (2010-Present) \
-*Mount Holyoke College*
-
-:::
-:::
-
-
-
-## Reimbursements
-
-**Reimbursements**
-
-::: columns
-::: {.column width="45%"}
-
-Laura Unwin (2010-2013) \
-*University of Oxford*
-
-:::
-
-::: {.column width="10%"}
-<!-- empty column to create gap -->
-:::
-
-::: {.column width="45%"}
-
-Alexis Cuttance (2010-2013) \
-*University of Minnesota*
-
-:::
-:::
-
-
-
-## Accountants
-
-**Accountants**
-
-::: columns
-::: {.column width="45%"}
-
-David Robinson (2010-2013) \
-*University of Oxford*
-
-:::
-
-::: {.column width="10%"}
-<!-- empty column to create gap -->
-:::
-
-::: {.column width="45%"}
-
-Kristen Charles (2010-2013) \
-*University of Minnesota*
-
-:::
-:::
-
-
-
-## Website
-
-**Website**
-
-::: columns
-::: {.column width="45%"}
+Moira Lynch (2011-2012)\
 
 [University of Wisconsin-Madison]{.underline}
 
-John Fowler (2010-2012) \
-
+Allie Frankel (2010-2012)\
 :::
 
 ::: {.column width="10%"}
@@ -263,14 +96,128 @@ John Fowler (2010-2012) \
 :::
 
 ::: {.column width="45%"}
-
 [University of Minnesota]{.underline}
 
-Ryan Andersen (2012-Present) \
-Elleni Fellows (2013) \
-Dan Kunitz (2012-2013) \
-Justin Schell (2013) \
+Alec Albright (2011-2013)\
+Brooke Coe (2012-2013)\
+Emalie Coplan (2011-2012)\
+Holly Dunn (2013-2014)\
+Grace Fiddler (2010-2012)\
+Katherine Franzel (2013)\
+Marie-Christine Ghreichi (2012-13)\
+Katrina Heimark (2013-2014)\
+Daniel Johnson (2013)\
+Meagan Johnson (2010-2012)\
+Maggie Loeffelholz (2011-2012)\
+Cameron Mailhot (2013)\
+Florencia Montal (2013-2014)\
+Zachary Payne-Meili (2010-2012)\
+Farrah Tek (2013-2014)\
+Marcela Villarrazo (2012-2014)\
 
+[Tulane University]{.underline}
+
+Catherine Perrone (2014)\
+Phoebe Shepherd (2015)\
+Idean Ben-Yakir (2015)\
+Jamie Campbell (2015)\
+Ezra Spira-Cohen (2015)\
+Weishe Jiang (2016)\
+Tess Martin (2016-18)\
+Joseph Sotile (2017-18)\
+Halley Wolin (2018)\
+Catherine Grayson (2018)\
 :::
 :::
+
+## Consultants
+
+::: columns
+::: {.column width="45%"}
+Geoff Dancy (2013-Present)\
+*Tulane University*
+
+Veronica Michel (2012-Present)\
+*John Jay College of Criminal Justice*
+
+Tricia Olsen (2010-Present)\
+*University of Denver*
+:::
+
+::: {.column width="10%"}
+<!-- empty column to create gap -->
+:::
+
+::: {.column width="45%"}
+Hunjoon Kim (2010-Present)\
+*Griffith University*
+
+Moira Lynch (2012-Present)\
+*Loyola University Maryland*
+
+Andrew Reiter (2010-Present)\
+*Mount Holyoke College*
+:::
+:::
+
+## Reimbursements
+
+::: columns
+::: {.column width="45%"}
+Laura Unwin (2010-2013)\
+*University of Oxford*
+:::
+
+::: {.column width="10%"}
+<!-- empty column to create gap -->
+:::
+
+::: {.column width="45%"}
+Alexis Cuttance (2010-2013)\
+*University of Minnesota*
+:::
+:::
+
+## Accountants
+
+::: columns
+::: {.column width="45%"}
+David Robinson (2010-2013)\
+*University of Oxford*
+:::
+
+::: {.column width="10%"}
+<!-- empty column to create gap -->
+:::
+
+::: {.column width="45%"}
+Kristen Charles (2010-2013)\
+*University of Minnesota*
+:::
+:::
+
+## Website
+
+::: columns
+::: {.column width="45%"}
+[University of Wisconsin-Madison]{.underline}
+
+John Fowler (2010-2012)\
+:::
+
+::: {.column width="10%"}
+<!-- empty column to create gap -->
+:::
+
+::: {.column width="45%"}
+[University of Minnesota]{.underline}
+
+Ryan Andersen (2012-Present)\
+Elleni Fellows (2013)\
+Dan Kunitz (2012-2013)\
+Justin Schell (2013)\
+:::
+:::
+
+{{< include _footer.qmd >}}
 

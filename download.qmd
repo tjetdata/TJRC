@@ -40,12 +40,15 @@ Dancy, Geoff, Francesca Lessa, Bridget Marchesi, Leigh A. Payne, Gabriel Pereira
 
 Democratic Transitions, 1970-2010: [pdf](https://www.transitionaljusticedata.com/files/demo%20transitions.pdf)
 
-Domestic Criminal Prosecutions Coding Manual: [pdf](https://www.transitionaljusticedata.com/files/Trials%20Coding%20Manual.pdf) 
+Domestic Criminal Prosecutions Coding Manual: [pdf](https://www.transitionaljusticedata.com/files/Trials%20Coding%20Manual.pdf)
 
-Amnesty Coding Manual: [pdf](https://www.transitionaljusticedata.com/files/Amnesty%20Coding%20Manual.pdf) 
+Amnesty Coding Manual: [pdf](https://www.transitionaljusticedata.com/files/Amnesty%20Coding%20Manual.pdf)
 
 Truth Commission Coding Manual: [pdf](https://www.transitionaljusticedata.com/files/Truth%20Commission%20Coding%20Manual.pdf)
 
 ## Feedback and Corrections
 
 The Collaborative welcomes and encourages [Feedback](https://www.transitionaljusticedata.com/feedback) from country experts. With such feedback, we hope to continue to improve the currently available data. We will review your comments, research them, verify them, and make emendations if necessary.
+
+{{< include _footer.qmd >}}
+

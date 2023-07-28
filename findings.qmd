@@ -56,7 +56,7 @@ Jeffery, Reneé and Hun Joon Kim, eds. 2014. [*Transitional Justice in the Asia 
 
 Lessa, Francesca, Tricia Olsen, Leigh Payne, Gabriel Pereira and Andrew Reiter. 2014. "Persistent or Eroding Impunity? The Divergent Effects of Legal Challenges to Amnesty Laws for Past Human Rights Violations." *Israel Law Review* 47.1.
 
-Lessa, Francesca, Tricia Olsen, Leigh Payne, Gabriel Pereira and Andrew Reiter. "Overcoming Impunity: Pathways to Accountability in Latin America." *International Journal of Transitional Justice* 8(1): 75-98*. *
+Lessa, Francesca, Tricia Olsen, Leigh Payne, Gabriel Pereira and Andrew Reiter. "Overcoming Impunity: Pathways to Accountability in Latin America." *International Journal of Transitional Justice* 8(1): 75-98.
 
 Payne, Leigh A. and Kathryn Sikkink. 2014. "Transitional Justice in the Asia Pacific: Comparative and Theoretical Perspectives." in *Transitional Justice in the Asia-Pacific*, Eds. Reneé Jeffery and Hun Joon Kim. New York: Cambridge University Press. 33-60.
 
@@ -80,7 +80,7 @@ Dancy, Geoff, and Verónica Michel. 2016. "Human Rights Enforcement From Below: 
 
 ### 2017
 
-Berlin, Mark and Geoff Dancy. 2017. "The Difference Law Makes: Domestic Criminal Laws Against Atrocity and Transitional Human Rights Prosecutions." [51(3): 533-566.]
+Berlin, Mark and Geoff Dancy. 2017. "The Difference Law Makes: Domestic Criminal Laws Against Atrocity and Transitional Human Rights Prosecutions." 51(3): 533-566.
 
 Dancy, Geoff, and Christopher J. Fariss. 2017. "Rescuing Human Rights Law from Legalism and Its Critics." *Human Rights Quarterly* 39(1): 1-36 (2017).
 
@@ -119,3 +119,6 @@ Dancy, Geoff. 2019. "Achieving an Unpopular Balance: Colombian Post-Conflict Jus
 Dancy, Geoff and Oskar Timo Thoms. 2021. "Do Truth Commissions Improve Democracy?" Forthcoming in *Comparative Political Studies.*
 
 Dancy, Geoff and Kathryn Sikkink. 2021. "The Data of Transitional Justice." Forthcoming in *The Oxford Handbook of Transitional Justice*, eds. Jens Meierhenrich, Alexander Laban Hinton, and Lawrence Douglas. Oxford University Press.
+
+{{< include _footer.qmd >}}
+

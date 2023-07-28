@@ -49,3 +49,6 @@ For amnesties, the team began with data collected by Louise Mallinder (2008), an
 ### Is this a complete record of transitional justice events?
 
 No, and we do not claim that it is. While we are confident that we have covered almost all truth commissions and amnesties, we cannot know whether we have captured all human rights trials that have taken place everywhere in the world. We collected 7,523 accused and 4,686 trial listings in 153 country jurisdictions, though we consider only 1,149 accused in 508 trials in 65 countries to be transitional in nature. Yet, despite these large numbers, we cannot know how many cases we have overlooked, or how much retrievable information is missing from the records. This is not necessarily a problem specific to our data, but a problem with all event history data. However, we have not let our desire to be comprehensive prevent us from being pragmatic, and we will release the data with the understanding that it is a never-ending work in progress.
+
+{{< include _footer.qmd >}}
+

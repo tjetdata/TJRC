@@ -13,8 +13,10 @@ title: "Links"
 [US Institute of Peace Transitional Justice Page](http://www.usip.org/publications/transitional-justice-2)
 
 [The Transitional Justice Institute, University of Ulster](http://transitionaljustice.ulster.ac.uk/)
-		
+
 [The International Center for Transitional Justice](http://ictj.org/)
 
 [The Trial Watch Project, Geneva](http://www.trial-ch.org/en/activities/informing-the-public/trial-watch.html)
-		
+
+{{< include _footer.qmd >}}
+
