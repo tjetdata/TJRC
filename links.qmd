@@ -1,5 +1,6 @@
 ---
 title: "Links"
+editor: source
 ---
 
 [US Department of State Human Rights Reports](http://www.state.gov/j/drl/rls/hrrpt/)

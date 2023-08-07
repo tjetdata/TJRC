@@ -1,3 +1,7 @@
+---
+editor: source
+---
+
 \
 
 ------------------------------------------------------------------------
@@ -6,7 +10,4 @@ This material is based upon work supported by the National Science Foundation (G
 
 Any opinions, findings, and conclusions or recommendations expressed in this material are those of the authors and do not necessarily reflect the views of their Universities or those of the National Science Foundation or the Arts and Humanities Research Council, or the Oak Foundation.
 
-[![](/images/nsf_logo.jpg){fig-alt="National Science Foundation"}](http://www.nsf.gov/)
-[![](/images/ahrc.jpg){fig-alt="Arts & Humanities Research Council"}](http://www.ahrc.ac.uk/Pages/Home.aspx)
-[![](/images/uofm.gif){fig-alt="University of Minnesota"}](http://www1.umn.edu/twincities/index.html)
-[![](/images/uoo.gif){fig-alt="University of Oxford"}](http://www.ox.ac.uk/)
+[![](/images/nsf_logo.jpg){fig-alt="National Science Foundation"}](http://www.nsf.gov/) [![](/images/ahrc.jpg){fig-alt="Arts & Humanities Research Council"}](http://www.ahrc.ac.uk/Pages/Home.aspx) [![](/images/uofm.gif){fig-alt="University of Minnesota"}](http://www1.umn.edu/twincities/index.html) [![](/images/uoo.gif){fig-alt="University of Oxford"}](http://www.ox.ac.uk/)

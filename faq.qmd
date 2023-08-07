@@ -1,5 +1,6 @@
 ---
 title: "Frequently Asked Questions"
+editor: source
 ---
 
 ### Why did you select these three mechanisms---trials, truth commissions, and amnesties

@@ -1,5 +1,6 @@
 ---
 title: "Download"
+editor: source
 ---
 
 **NOTE:** The data on TJRC are not all downloadable at once. TJRC researchers make various datasets to answer particular questions, and then we release those for replication and reuse. To understand in greater detail, see this excerpt from Geoff Dancy and Kathryn Sikkink, "The Data of Transitional Justice." In preparation for *The Oxford Handbook of Transitional Justice*.

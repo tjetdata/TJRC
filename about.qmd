@@ -1,5 +1,6 @@
 ---
 title: "About"
+editor: source
 ---
 
 The **Transitional Justice Research Collaborative** began with support from the National Science Foundation (NSF) and the Arts and Humanities Research Council (AHRC) in June 2010, and it ceased updating in 2018. Members of the project, Geoff Dancy and Kathryn Sikkink, will soon go live with a new database called the Transitional Justice Evaluation Tools (TJET). TJET will present data updates on transitional justice mechanisms through 2020.

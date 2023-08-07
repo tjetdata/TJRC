@@ -1,36 +1,27 @@
 project:
   type: website
 
+format:
+  html:
+    theme: cosmo
+    css: styles.css
+    toc: true
+
 website:
   title: "Transitional Justice Research Collaborative"
-  navbar: 
+  navbar:
     left:
       - href: index.qmd
         text: "Home"
-      # - href: browse.qmd
-      #   text: "Browse"
       - href: download.qmd
         text: "Download"
       - href: findings.qmd
         text: "Findings"
       - href: faq.qmd
         text: "FAQ"
-      - href: feedback.qmd
-        text: "Feedback"
       - href: about.qmd
         text: "About"
       - href: people.qmd
         text: "People"
       - href: links.qmd
         text: "Links"
-
-format:
-  html:
-    theme: cosmo
-    css: styles.css
-    toc: true
-    # include-after-body: 
-    #   file: "_footer.qmd"
-      
-editor: visual
-

@@ -1,5 +1,6 @@
 ---
 title: "Home"
+editor: source
 ---
 
 [transitionaljusticedata.com](transitionaljusticedata.com) is meant for scholars and practitioners who wish to examine the causes and impacts of mechanisms that address human rights violations. It was founded to present the work of the Transitional Justice Research Collaborative (TJRC), which ceased operating in 2018.
@@ -14,33 +15,19 @@ The Collaborative welcomes and encourages <a href="https://transitionaljusticeda
 
 ## Time Trends
 
-<!-- <img src="dcp_guilt.jpg" width="390" height="249"/> -->
-
 ![](images/dcp_guilt.jpg)
-
-<!-- <img src="int_pros.jpg" width="385" height="245"/> -->
 
 ![](images/int_pros.jpg)
 
-<!-- <img src="am_chal.jpg" width="389" height="242"/> -->
-
 ![](images/am_chal.jpg)
-
-<!-- <img src="tc_strength.jpg" width="387" height="241"/> -->
 
 ![](images/tc_strength.jpg)
 
 ## Regional Patterns
 
-<!-- <img src="dcp2_pie.jpg" style="width: 389px; height: 290px;"/> -->
-
 ![](images/dcp2_pie.jpg)
 
-<!-- <img src="am2_pie.jpg" style="width: 389px; height: 290px;"/> -->
-
 ![](images/am2_pie.jpg)
-
-<!-- <img src="tc2_pie.jpg" style="width: 389px; height: 290px;"/> -->
 
 ![](images/tc2_pie.jpg)
 

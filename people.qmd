@@ -1,5 +1,6 @@
 ---
 title: "Project Members"
+editor: source
 ---
 
 ## Principal Investigators
@@ -220,4 +221,3 @@ Justin Schell (2013)\
 :::
 
 {{< include _footer.qmd >}}
-
