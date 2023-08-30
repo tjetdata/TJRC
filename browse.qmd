@@ -6,13 +6,16 @@ format:
     df-print: paged
 ---
 
-Please select a mechanism and a country to browse the data.
+Please select a mechanism to browse the data.
 
 ``` {r}
 #| include: false
 library(tidyverse)
 library(reactable)
 library(htmltools)
+library(fontawesome)
+ctry <- read_csv(here::here("_data", "country_list_tjet.csv")) %>% 
+  select(countryid, country) 
 ```
 
 
@@ -27,50 +30,78 @@ library(htmltools)
 ``` {r}
 #| echo: false
 #| warning: false
-df <- read_csv("_data/amnesties.csv") %>% 
-  select(amnestyID, countryID, amnestyYear, narrative) %>%
-  rename(Country = countryID, 
-         # ID = amnestyID, 
+
+df <- read_csv("_data/amnesties.csv") %>%
+  left_join(ctry, by = c(countryID = "countryid"), keep = FALSE) %>% 
+  select(amnestyID, country, amnestyYear, narrative) %>%
+  rename(# ID = amnestyID, 
+         # Country = countryID, 
          Year = amnestyYear, 
          Narrative = narrative) 
-df %>% 
-  reactable(searchable = TRUE, 
-            filterable = TRUE,
-            sortable = TRUE,
-            showSortable = TRUE,
-            defaultSorted = list(amnestyID = "asc"),
-            resizable = TRUE,
-            static = FALSE,
-            compact = TRUE, 
-            bordered = FALSE,
-            height = 600,
-            showPageSizeOptions = TRUE, 
-            pageSizeOptions = c(10, 25, 50, 100, 500, 1000),
-            defaultPageSize = 25,
-            paginationType = "jump",
-            defaultColDef = colDef(minWidth = 100),
-            columns = list(
-              amnestyID = colDef(name = "ID", filterable = FALSE),
-              # Narrative = colDef(minWidth = 400),
-              Narrative = colDef(show = FALSE, searchable = TRUE),
-              Year = colDef(
-                filterInput = function(values, name) {
-                  tags$select(
-                    # Set to undefined to clear the filter
-                    onchange = sprintf("Reactable.setFilter('amnesties-temp', '%s', event.target.value || undefined)", name),
-                    # "All" has an empty value to clear the filter, and is the default option
-                    tags$option(value = "", "All"),
-                    lapply(sort(unique(values)), tags$option),
-                    "aria-label" = sprintf("Filter %s", name),
-                    style = "height: 100%;"
+
+htmltools::browsable(
+  tagList(
+    tags$button(
+      "Expand/collapse all",
+      onclick = "Reactable.toggleAllRowsExpanded('amnesties-temp')"
+    ),
+    df %>% 
+      reactable(searchable = TRUE, 
+                filterable = TRUE,
+                sortable = TRUE,
+                showSortable = TRUE,
+                defaultSorted = list(amnestyID = "asc"),
+                resizable = TRUE,
+                borderless = TRUE,
+                striped = FALSE,
+                highlight = TRUE,
+                static = FALSE,
+                compact = FALSE, 
+                bordered = FALSE,
+                height = 600,
+                showPageSizeOptions = TRUE, 
+                pageSizeOptions = c(10, 25, 50, 100, 500, 1000),
+                defaultPageSize = 25,
+                paginationType = "jump",
+                defaultColDef = colDef(minWidth = 100),
+                columns = list(
+                  amnestyID = colDef(name = "ID", filterable = FALSE),
+                  # Narrative = colDef(minWidth = 400),
+                  Narrative = colDef(show = FALSE, searchable = TRUE),
+                  country = colDef(
+                    filterInput = function(values, name) {
+                      tags$select(
+                        # Set to undefined to clear the filter
+                        onchange = sprintf("Reactable.setFilter('amnesties-temp', '%s', event.target.value || undefined)", name),
+                        # "All" has an empty value to clear the filter, and is the default option
+                        tags$option(value = "", "All"),
+                        lapply(sort(unique(values)), tags$option),
+                        "aria-label" = sprintf("Filter %s", name),
+                        style = "height: 100%; width: 99%"
+                      )
+                    }
                   )
-                }
-              )
-            ),
-            details = function(index) paste("Narrative:", df[index, "Narrative"]),
-            defaultExpanded = TRUE,
-            elementId = "amnesties-temp"
+                ),
+                details = function(index) paste("Narrative:", df[index, "Narrative"]),
+                defaultExpanded = FALSE,
+                onClick = "expand",
+                # theme = reactableTheme(
+                #   searchInputStyle = list(width = "100%")
+                # ),
+                elementId = "amnesties-temp"
+      ),
+    tags$button(
+      tagList(fontawesome::fa("download"), "Download as CSV"),
+      onclick = "Reactable.downloadDataCSV('amnesties-temp', 'amnesties.csv')"
+    )
   )
+)
+
+
+
+
+
+
 ```
 
 ## Challenges 
