@@ -3,7 +3,8 @@ title: "Home"
 editor: source
 ---
 
-[transitionaljusticedata.com](transitionaljusticedata.com) is meant for scholars and practitioners who wish to examine the causes and impacts of mechanisms that address human rights violations. It was founded to present the work of the Transitional Justice Research Collaborative (TJRC), which ceased operating in 2018.
+<!-- [transitionaljusticedata.com](https://www.transitionaljusticedata.com)  -->
+This website is meant for scholars and practitioners who wish to examine the causes and impacts of mechanisms that address human rights violations. It was founded to present the work of the Transitional Justice Research Collaborative (TJRC), which ceased operating in 2018.
 
 **Members of the TJRC project, Geoff Dancy and Kathryn Sikkink, will soon go live with *a new database called the Transitional Justice Evaluation Tools (TJET)*. TJET will present data updates on transitional justice mechanisms through 2020.**
 
