@@ -29,7 +29,7 @@ Below are the replication data for our most recent publications. They do not inc
 
 Dancy, Geoff, Bridget Marchesi, Tricia Olsen, Leigh A. Payne, Andrew Reiter, and Kathryn Sikkink. 2019. "Behind Bars and Bargains: New Findings on Transitional Justice in Emerging Democracies" Forthcoming, *International Studies Quarterly*.
 
-\[[Data](https://drive.google.com/file/d/1-Z3xW9_4GwbtgVOrBNfzv5b_s4SFPI4H/view?usp=sharing%22)\] \[[Figure 1 Data](https://drive.google.com/file/d/1zlXz2bOl_c6-GyEPnUeZJHfiJ7EW_sD9/view?usp=sharing)\] \[[STATA do file](https://drive.google.com/file/d/10eXXqLYUk3op3stKRbAnimK2_wvT7xEk/view?usp=sharing)\] \[[Replication memo](https://drive.google.com/file/d/1w1jUpfu-JP8PqMmZcdRwslMwyFYoBAz3/view?usp=sharing)\]
+\[[Data](files/barsbargains.dta)\] \[[Figure 1 Data](files/barsbargains_fig1.dta)\] \[[STATA do file](files/BarsBargains4.1_replicate.do)\] \[[Replication memo](files/ReplicationMemo.rtf)\]
 
 ## Citation of Browse Data
 
@@ -52,4 +52,3 @@ Truth Commission Coding Manual: [pdf](https://www.transitionaljusticedata.com/fi
 The Collaborative welcomes and encourages [Feedback](https://www.transitionaljusticedata.com/feedback) from country experts. With such feedback, we hope to continue to improve the currently available data. We will review your comments, research them, verify them, and make emendations if necessary.
 
 {{< include _footer.qmd >}}
-

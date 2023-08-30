@@ -1,0 +1,8 @@
+---
+title: "Feedback"
+editor: source
+---
+
+Your feedback is highly appreciated. Please provide any feedback about the website or the data by email to ...
+
+{{< include _footer.qmd >}}

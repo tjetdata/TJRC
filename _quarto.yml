@@ -3,9 +3,12 @@ project:
 
 format:
   html:
-    theme: cosmo
+    # theme: cosmo
+    # theme: sandstone
+    theme: yeti
     css: styles.css
     toc: true
+    df-print: kable
 
 website:
   title: "Transitional Justice Research Collaborative"
@@ -13,12 +16,16 @@ website:
     left:
       - href: index.qmd
         text: "Home"
+      - href: browse.qmd
+        text: "Browse Data"
       - href: download.qmd
         text: "Download"
       - href: findings.qmd
         text: "Findings"
       - href: faq.qmd
         text: "FAQ"
+      - href: feedback.qmd
+        text: "Feedback"
       - href: about.qmd
         text: "About"
       - href: people.qmd
