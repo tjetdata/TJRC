@@ -8,5 +8,6 @@ map(dir("_data"), function(file) {
   do.call(rbind, .) %>%
   select(table, variable) %>%
   arrange(table, variable) %>%
-  mutate(include_as = NA) %>%
+  mutate(include_as = NA,
+         filter_of = NA) %>%
   write_csv(here::here("_data", "meta.csv"), na = "")
