@@ -3,21 +3,21 @@ title: "Links"
 editor: source
 ---
 
-[US Department of State Human Rights Reports](http://www.state.gov/j/drl/rls/hrrpt/)
+[US Department of State Human Rights Reports](https://www.state.gov/j/drl/rls/hrrpt/)
 
 [Keesing's Record of World Events](http://recordofworldevents.com/)
 
 [University of Minnesota Human Rights Library](http://www1.umn.edu/humanrts/)
 
-[The Polity IV Project: Political Regime Characteristics and Transitions, 1800-2012](http://www.systemicpeace.org/polity/polity4.htm)
+[The Polity IV Project: Political Regime Characteristics and Transitions, 1800-2012](https://www.systemicpeace.org/polity/polity4.htm)
 
-[US Institute of Peace Transitional Justice Page](http://www.usip.org/publications/transitional-justice-2)
+[US Institute of Peace Transitional Justice Page](https://www.usip.org/publications/transitional-justice)
 
-[The Transitional Justice Institute, University of Ulster](http://transitionaljustice.ulster.ac.uk/)
+[The Transitional Justice Institute, University of Ulster](https://www.ulster.ac.uk/transitional-justice-institute)
 
-[The International Center for Transitional Justice](http://ictj.org/)
+[The International Center for Transitional Justice](https://www.ictj.org/)
 
-[The Trial Watch Project, Geneva](http://www.trial-ch.org/en/activities/informing-the-public/trial-watch.html)
+[Trial International, Geneva](https://trialinternational.org/)
 
 {{< include _footer.qmd >}}
 

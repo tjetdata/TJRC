@@ -4,9 +4,12 @@ editor: source
 ---
 
 <!-- [transitionaljusticedata.com](https://www.transitionaljusticedata.com)  -->
+
 This website is meant for scholars and practitioners who wish to examine the causes and impacts of mechanisms that address human rights violations. It was founded to present the work of the Transitional Justice Research Collaborative (TJRC), which ceased operating in 2018.
 
-**Members of the TJRC project, Geoff Dancy and Kathryn Sikkink, will soon go live with *a new database called the Transitional Justice Evaluation Tools (TJET)*. TJET will present data updates on transitional justice mechanisms through 2020.**
+::: callout-important
+**Members of the TJRC project, Geoff Dancy and Kathryn Sikkink, will soon go live with *a new database called the Transitional Justice Evaluation Tools (TJET)*. TJET will present extensive data updates on transitional justice mechanisms through 2020.**
+:::
 
 Comprised of principal researchers from University of Oxford, University of Minnesota and Harvard University, TJRC presented data on three primary transitional justice mechanisms---human rights prosecutions, truth commissions, and amnesties---for 109 democratic transitions in 86 countries around the world, from 1970-2012. While by no means complete, the dataset includes the most comprehensive single collection of information on these mechanisms for countries around the world. With the support of the National Science Foundation and the Arts and Humanities Research Council, the data were collected from a variety of sources by more than 25 coders over a three-year period. As we complete our data collection and data processing activities, additional data will be made publicly available including new data on human rights prosecutions, vetting and reparations. Read [more details about this project.](about.html)
 
@@ -33,4 +36,3 @@ The Collaborative welcomes and encourages [Feedback](feedback.html) from country
 ![](images/tc2_pie.jpg)
 
 {{< include _footer.qmd >}}
-
