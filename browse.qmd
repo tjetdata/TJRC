@@ -6,16 +6,23 @@ format:
     df-print: paged
 ---
 
-Please select a mechanism to browse the data.
+Please select a mechanism to browse the data and use keywords and/or filters to narrow your search. Click on table rows to expand records.
 
 ``` {r}
 #| include: false
 library(tidyverse)
 library(reactable)
 library(htmltools)
+library(tippy)
 library(fontawesome)
+
 ctry <- read_csv(here::here("_data", "country_list_tjet.csv")) %>% 
   select(countryid, country) 
+
+with_tooltip <- function(value, tooltip, ...) {
+  div(style = "text-decoration: underline; text-decoration-style: dotted; cursor: help",
+      tippy(value, tooltip, ...))
+}
 ```
 
 
@@ -31,13 +38,9 @@ ctry <- read_csv(here::here("_data", "country_list_tjet.csv")) %>%
 #| echo: false
 #| warning: false
 
-df <- read_csv("_data/amnesties.csv") %>%
+df <- read_csv("_data/amnesties.csv", skip = 1) %>%
   left_join(ctry, by = c(countryID = "countryid"), keep = FALSE) %>% 
-  select(amnestyID, country, amnestyYear, narrative) %>%
-  rename(# ID = amnestyID, 
-         # Country = countryID, 
-         Year = amnestyYear, 
-         Narrative = narrative) 
+  select(amnestyID, country, amnestyYear, narrative) 
 
 htmltools::browsable(
   tagList(
@@ -46,33 +49,46 @@ htmltools::browsable(
                 filterable = TRUE,
                 sortable = TRUE,
                 showSortable = TRUE,
-                defaultSorted = list(amnestyID = "asc"),
                 resizable = TRUE,
-                borderless = TRUE,
+                borderless = FALSE,
                 striped = FALSE,
                 highlight = TRUE,
-                static = FALSE,
+                static = TRUE,
                 compact = FALSE, 
                 bordered = FALSE,
-                height = 600,
-                showPageSizeOptions = TRUE, 
-                pageSizeOptions = c(10, 25, 50, 100, 500, 1000),
-                defaultPageSize = 25,
-                paginationType = "jump",
+                height = 500,
+                pagination = FALSE,
+                # showPageSizeOptions = TRUE, 
+                # pageSizeOptions = c(10, 25, 50, 100, 500, 1000),
+                # defaultPageSize = 25,
+                # paginationType = "jump",
                 defaultColDef = colDef(minWidth = 100),
+                defaultSorted = list(amnestyID = "asc"),
                 columns = list(
                   amnestyID = colDef(name = "ID", 
+                                     header = with_tooltip("ID", "Amnesty ID"),
                                      filterable = FALSE,
                                      width = 60),
-                  # Narrative = colDef(minWidth = 400),
-                  Narrative = colDef(show = FALSE, searchable = TRUE),
-                  country = colDef(
+                  narrative = colDef(show = FALSE, searchable = TRUE),
+                  country = colDef(name = "Country", 
                     filterInput = function(values, name) {
                       tags$select(
                         # Set to undefined to clear the filter
                         onchange = sprintf("Reactable.setFilter('amnesties-temp', '%s', event.target.value || undefined)", name),
                         # "All" has an empty value to clear the filter, and is the default option
-                        tags$option(value = "", "All"),
+                        tags$option(value = "", "All countries"),
+                        lapply(sort(unique(values)), tags$option),
+                        "aria-label" = sprintf("Filter %s", name),
+                        style = "height: 100%; width: 99%"
+                      )
+                    }
+                  ),
+                  amnestyYear = colDef(name = "Year", 
+                                       width = 120,
+                    filterInput = function(values, name) {
+                      tags$select(
+                        onchange = sprintf("Reactable.setFilter('amnesties-temp', '%s', event.target.value || undefined)", name),
+                        tags$option(value = "", "All years"),
                         lapply(sort(unique(values)), tags$option),
                         "aria-label" = sprintf("Filter %s", name),
                         style = "height: 100%; width: 99%"
@@ -80,16 +96,20 @@ htmltools::browsable(
                     }
                   )
                 ),
-                details = function(index) paste("Narrative:", df[index, "Narrative"]),
+                details = function(index) paste("Narrative:", df[index, "narrative"]),
                 defaultExpanded = FALSE,
                 onClick = "expand",
-                # theme = reactableTheme(
-                #   searchInputStyle = list(width = "100%")
-                # ),
+                language = reactableLang(
+                  searchPlaceholder = "Search keyword...",
+                  noData = "No entries found"
+                ),
+                theme = reactableTheme(
+                  searchInputStyle = list(width = "100%")
+                ),
                 elementId = "amnesties-temp"
       ),
     tags$button(
-      "Expand/collapse all",
+      "Expand or collapse additional information",
       onclick = "Reactable.toggleAllRowsExpanded('amnesties-temp')"
     )
   )
@@ -101,8 +121,8 @@ htmltools::browsable(
 ``` {r}
 #| echo: false
 #| warning: false
-read_csv("_data/challenges.csv") %>% 
-  # rename(ID = trialID) %>% 
+read_csv("_data/challenges.csv", skip = 1) %>% 
+  left_join(df %>% select(amnestyID, country), by = "amnestyID", keep = FALSE) %>% 
   reactable(searchable = TRUE, 
             filterable = TRUE,
             sortable = TRUE,
@@ -125,7 +145,9 @@ read_csv("_data/challenges.csv") %>%
 ``` {r}
 #| echo: false
 #| warning: false
-read_csv("_data/customaryjustice.csv") %>% 
+
+read_csv("_data/customaryjustice.csv", skip = 1) %>% 
+  left_join(ctry, by = c(countryID = "countryid"), keep = FALSE) %>% 
   rename(ID = customaryjusticeID, 
          Country = countryID) %>% 
   reactable(searchable = TRUE, 
@@ -148,7 +170,8 @@ read_csv("_data/customaryjustice.csv") %>%
 ``` {r}
 #| echo: false
 #| warning: false
-read_csv("_data/reparations.csv") %>% 
+read_csv("_data/reparations.csv", skip = 1) %>% 
+  left_join(ctry, by = c(countryID = "countryid"), keep = FALSE) %>% 
   rename(ID = reparationID, 
          Country = countryID) %>% 
   reactable(searchable = TRUE, 
@@ -175,7 +198,11 @@ read_csv("_data/reparations.csv") %>%
 ``` {r}
 #| echo: false
 #| warning: false
-read_csv("_data/trials.csv") %>% 
+
+df <- read_csv("_data/trials.csv", skip = 1) %>% 
+  left_join(ctry, by = c(countryID = "countryid"), keep = FALSE)
+
+df %>% 
   filter(trialType == 3) %>% 
   rename(ID = trialID) %>% 
   reactable(searchable = TRUE, 
@@ -198,7 +225,7 @@ read_csv("_data/trials.csv") %>%
 ``` {r}
 #| echo: false
 #| warning: false
-read_csv("_data/trials.csv") %>% 
+df %>% 
   filter(trialType == 2) %>%
   rename(ID = trialID) %>% 
   reactable(searchable = TRUE, 
@@ -221,7 +248,7 @@ read_csv("_data/trials.csv") %>%
 ``` {r}
 #| echo: false
 #| warning: false
-read_csv("_data/trials.csv") %>% 
+df %>% 
   filter(trialType == 1) %>% 
   rename(ID = trialID) %>% 
   reactable(searchable = TRUE, 
@@ -244,7 +271,8 @@ read_csv("_data/trials.csv") %>%
 ``` {r}
 #| echo: false
 #| warning: false
-read_csv("_data/civiltrials.csv") %>% 
+read_csv("_data/civiltrials.csv", skip = 1) %>% 
+  left_join(ctry, by = c(countryViolationID = "countryid"), keep = FALSE) %>% 
   rename(ID = civiltrialID) %>% 
   reactable(searchable = TRUE, 
             filterable = TRUE,
@@ -266,7 +294,9 @@ read_csv("_data/civiltrials.csv") %>%
 ``` {r}
 #| echo: false
 #| warning: false
-read_csv("_data/accusations.csv") %>% 
+
+read_csv("_data/accusations.csv", skip = 1) %>% 
+  left_join(df %>% select(trialID, country), by = "trialID", keep = FALSE) %>%
   rename(ID = accusationID) %>% 
   reactable(searchable = TRUE, 
             filterable = TRUE,
@@ -290,7 +320,8 @@ read_csv("_data/accusations.csv") %>%
 ``` {r}
 #| echo: false
 #| warning: false
-read_csv("_data/tcs.csv") %>% 
+read_csv("_data/tcs.csv", skip = 1) %>% 
+  left_join(ctry, by = c(countryID = "countryid"), keep = FALSE) %>% 
   rename(ID = truthcommissionID, 
          Country = countryID) %>% 
   reactable(searchable = TRUE, 
@@ -313,7 +344,8 @@ read_csv("_data/tcs.csv") %>%
 ``` {r}
 #| echo: false
 #| warning: false
-read_csv("_data/vettings.csv") %>% 
+read_csv("_data/vettings.csv", skip = 1) %>% 
+  left_join(ctry, by = c(countryID = "countryid"), keep = FALSE) %>% 
   rename(ID = vettingID, 
          Country = countryID) %>% 
   reactable(searchable = TRUE, 
