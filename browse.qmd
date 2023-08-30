@@ -1,0 +1,299 @@
+---
+title: "Browse Records"
+editor: source
+format: 
+  html: 
+    df-print: paged
+---
+
+Please select a mechanism and a country to browse the data.
+
+``` {r}
+#| include: false
+library(tidyverse)
+library(reactable)
+library(htmltools)
+```
+
+
+::: {.panel-tabset group="mechanism"}
+
+## Amnesties
+
+:::: {.panel-tabset}
+
+## Amnesties
+
+``` {r}
+#| echo: false
+#| warning: false
+read_csv("_data/amnesties.csv") %>% 
+  select(amnestyID, countryID, amnestyYear, narrative) %>%
+  rename(ID = amnestyID, 
+         Country = countryID, 
+         Year = amnestyYear, 
+         Narrative = narrative) %>% 
+  reactable(searchable = TRUE, 
+            filterable = TRUE,
+            sortable = TRUE,
+            showSortable = TRUE,
+            resizable = TRUE,
+            static = FALSE,
+            compact = TRUE, 
+            height = 600,
+            showPageSizeOptions = TRUE, 
+            pageSizeOptions = c(10, 25, 50, 100, 500, 1000),
+            defaultPageSize = 25,
+            defaultColDef = colDef(minWidth = 100),
+            columns = list(
+              Narrative = colDef(minWidth = 400), 
+              Year = colDef(
+                filterInput = function(values, name) {
+                  tags$select(
+                    # Set to undefined to clear the filter
+                    onchange = sprintf("Reactable.setFilter('amnesties-temp', '%s', event.target.value || undefined)", name),
+                    # "All" has an empty value to clear the filter, and is the default option
+                    tags$option(value = "", "All"),
+                    lapply(sort(unique(values)), tags$option),
+                    "aria-label" = sprintf("Filter %s", name),
+                    style = "height: 100%;"
+                  )
+                }
+              )
+            ),
+            elementId = "amnesties-temp"
+  )
+```
+
+## Challenges 
+
+``` {r}
+#| echo: false
+#| warning: false
+read_csv("_data/challenges.csv") %>% 
+  # rename(ID = trialID) %>% 
+  reactable(searchable = TRUE, 
+            filterable = TRUE,
+            sortable = TRUE,
+            showSortable = TRUE,
+            resizable = TRUE,
+            static = FALSE,
+            compact = TRUE, 
+            height = 600,
+            showPageSizeOptions = TRUE, 
+            pageSizeOptions = c(10, 25, 50, 100, 500, 1000),
+            defaultPageSize = 25,
+            defaultColDef = colDef(minWidth = 100)
+  )
+```
+
+::::
+
+## Trials
+
+:::: {.panel-tabset group="trials"}
+
+## International 
+
+``` {r}
+#| echo: false
+#| warning: false
+read_csv("_data/trials.csv") %>% 
+  filter(trialType == 3) %>% 
+  rename(ID = trialID) %>% 
+  reactable(searchable = TRUE, 
+            filterable = TRUE,
+            sortable = TRUE,
+            showSortable = TRUE,
+            resizable = TRUE,
+            static = FALSE,
+            compact = TRUE, 
+            height = 600,
+            showPageSizeOptions = TRUE, 
+            pageSizeOptions = c(10, 25, 50, 100, 500, 1000),
+            defaultPageSize = 25,
+            defaultColDef = colDef(minWidth = 100)
+  )
+```
+
+## Foreign 
+
+``` {r}
+#| echo: false
+#| warning: false
+read_csv("_data/trials.csv") %>% 
+  filter(trialType == 2) %>%
+  rename(ID = trialID) %>% 
+  reactable(searchable = TRUE, 
+            filterable = TRUE,
+            sortable = TRUE,
+            showSortable = TRUE,
+            resizable = TRUE,
+            static = FALSE,
+            compact = TRUE, 
+            height = 600,
+            showPageSizeOptions = TRUE, 
+            pageSizeOptions = c(10, 25, 50, 100, 500, 1000),
+            defaultPageSize = 25,
+            defaultColDef = colDef(minWidth = 100)
+  )
+```
+
+## Domestic 
+
+``` {r}
+#| echo: false
+#| warning: false
+read_csv("_data/trials.csv") %>% 
+  filter(trialType == 1) %>% 
+  rename(ID = trialID) %>% 
+  reactable(searchable = TRUE, 
+            filterable = TRUE,
+            sortable = TRUE,
+            showSortable = TRUE,
+            resizable = TRUE,
+            static = FALSE,
+            compact = TRUE, 
+            height = 600,
+            showPageSizeOptions = TRUE, 
+            pageSizeOptions = c(10, 25, 50, 100, 500, 1000),
+            defaultPageSize = 25,
+            defaultColDef = colDef(minWidth = 100)
+  )
+```
+
+## Civil 
+
+``` {r}
+#| echo: false
+#| warning: false
+read_csv("_data/civiltrials.csv") %>% 
+  rename(ID = civiltrialID) %>% 
+  reactable(searchable = TRUE, 
+            filterable = TRUE,
+            sortable = TRUE,
+            showSortable = TRUE,
+            resizable = TRUE,
+            static = FALSE,
+            compact = TRUE, 
+            height = 600,
+            showPageSizeOptions = TRUE, 
+            pageSizeOptions = c(10, 25, 50, 100, 500, 1000),
+            defaultPageSize = 25,
+            defaultColDef = colDef(minWidth = 100)
+  )
+```
+
+::::
+
+## Truth Commissions
+
+``` {r}
+#| echo: false
+#| warning: false
+read_csv("_data/tcs.csv") %>% 
+  rename(ID = truthcommissionID, 
+         Country = countryID) %>% 
+  reactable(searchable = TRUE, 
+            filterable = TRUE,
+            sortable = TRUE,
+            showSortable = TRUE,
+            resizable = TRUE,
+            static = FALSE,
+            compact = TRUE, 
+            height = 600,
+            showPageSizeOptions = TRUE, 
+            pageSizeOptions = c(10, 25, 50, 100, 500, 1000),
+            defaultPageSize = 25,
+            defaultColDef = colDef(minWidth = 100)
+  )
+```
+
+## Reparation
+
+``` {r}
+#| echo: false
+#| warning: false
+read_csv("_data/reparations.csv") %>% 
+  rename(ID = reparationID, 
+         Country = countryID) %>% 
+  reactable(searchable = TRUE, 
+            filterable = TRUE,
+            sortable = TRUE,
+            showSortable = TRUE,
+            resizable = TRUE,
+            static = FALSE,
+            compact = TRUE, 
+            height = 600,
+            showPageSizeOptions = TRUE, 
+            pageSizeOptions = c(10, 25, 50, 100, 500, 1000),
+            defaultPageSize = 25,
+            defaultColDef = colDef(minWidth = 100)
+  )
+```
+
+## Vetting
+
+``` {r}
+#| echo: false
+#| warning: false
+read_csv("_data/vettings.csv") %>% 
+  rename(ID = vettingID, 
+         Country = countryID) %>% 
+  reactable(searchable = TRUE, 
+            filterable = TRUE,
+            sortable = TRUE,
+            showSortable = TRUE,
+            resizable = TRUE,
+            static = FALSE,
+            compact = TRUE, 
+            height = 600,
+            showPageSizeOptions = TRUE, 
+            pageSizeOptions = c(10, 25, 50, 100, 500, 1000),
+            defaultPageSize = 25,
+            defaultColDef = colDef(minWidth = 100)
+  )
+```
+
+## Customary Justice
+
+``` {r}
+#| echo: false
+#| warning: false
+read_csv("_data/customaryjustice.csv") %>% 
+  rename(ID = customaryjusticeID, 
+         Country = countryID) %>% 
+  reactable(searchable = TRUE, 
+            filterable = TRUE,
+            sortable = TRUE,
+            showSortable = TRUE,
+            resizable = TRUE,
+            static = FALSE,
+            compact = TRUE, 
+            height = 600,
+            showPageSizeOptions = TRUE, 
+            pageSizeOptions = c(10, 25, 50, 100, 500, 1000),
+            defaultPageSize = 25,
+            defaultColDef = colDef(minWidth = 100)
+  )
+```
+
+:::
+
+<!-- Click here to hide additional filtering options. -->
+
+<!-- Hover over each filtering option to see more information. -->
+
+<!-- Context: -->
+
+<!-- Filter by Keywords: -->
+
+<!-- War Context: -->
+
+<!-- Crimes Covered: -->
+
+<!-- Fits definition of TJ: -->
+
+<!-- Year: -->
+
+{{< include _footer.qmd >}}
