@@ -27,26 +27,32 @@ library(htmltools)
 ``` {r}
 #| echo: false
 #| warning: false
-read_csv("_data/amnesties.csv") %>% 
+df <- read_csv("_data/amnesties.csv") %>% 
   select(amnestyID, countryID, amnestyYear, narrative) %>%
-  rename(ID = amnestyID, 
-         Country = countryID, 
+  rename(Country = countryID, 
+         # ID = amnestyID, 
          Year = amnestyYear, 
-         Narrative = narrative) %>% 
+         Narrative = narrative) 
+df %>% 
   reactable(searchable = TRUE, 
             filterable = TRUE,
             sortable = TRUE,
             showSortable = TRUE,
+            defaultSorted = list(amnestyID = "asc"),
             resizable = TRUE,
             static = FALSE,
             compact = TRUE, 
+            bordered = FALSE,
             height = 600,
             showPageSizeOptions = TRUE, 
             pageSizeOptions = c(10, 25, 50, 100, 500, 1000),
             defaultPageSize = 25,
+            paginationType = "jump",
             defaultColDef = colDef(minWidth = 100),
             columns = list(
-              Narrative = colDef(minWidth = 400), 
+              amnestyID = colDef(name = "ID", filterable = FALSE),
+              # Narrative = colDef(minWidth = 400),
+              Narrative = colDef(show = FALSE, searchable = TRUE),
               Year = colDef(
                 filterInput = function(values, name) {
                   tags$select(
@@ -61,6 +67,8 @@ read_csv("_data/amnesties.csv") %>%
                 }
               )
             ),
+            details = function(index) paste("Narrative:", df[index, "Narrative"]),
+            defaultExpanded = TRUE,
             elementId = "amnesties-temp"
   )
 ```
@@ -88,6 +96,52 @@ read_csv("_data/challenges.csv") %>%
 ```
 
 ::::
+
+## Customary Justice
+
+``` {r}
+#| echo: false
+#| warning: false
+read_csv("_data/customaryjustice.csv") %>% 
+  rename(ID = customaryjusticeID, 
+         Country = countryID) %>% 
+  reactable(searchable = TRUE, 
+            filterable = TRUE,
+            sortable = TRUE,
+            showSortable = TRUE,
+            resizable = TRUE,
+            static = FALSE,
+            compact = TRUE, 
+            height = 600,
+            showPageSizeOptions = TRUE, 
+            pageSizeOptions = c(10, 25, 50, 100, 500, 1000),
+            defaultPageSize = 25,
+            defaultColDef = colDef(minWidth = 100)
+  )
+```
+
+## Reparation
+
+``` {r}
+#| echo: false
+#| warning: false
+read_csv("_data/reparations.csv") %>% 
+  rename(ID = reparationID, 
+         Country = countryID) %>% 
+  reactable(searchable = TRUE, 
+            filterable = TRUE,
+            sortable = TRUE,
+            showSortable = TRUE,
+            resizable = TRUE,
+            static = FALSE,
+            compact = TRUE, 
+            height = 600,
+            showPageSizeOptions = TRUE, 
+            pageSizeOptions = c(10, 25, 50, 100, 500, 1000),
+            defaultPageSize = 25,
+            defaultColDef = colDef(minWidth = 100)
+  )
+```
 
 ## Trials
 
@@ -184,6 +238,28 @@ read_csv("_data/civiltrials.csv") %>%
   )
 ```
 
+## The Accused 
+
+``` {r}
+#| echo: false
+#| warning: false
+read_csv("_data/accusations.csv") %>% 
+  rename(ID = accusationID) %>% 
+  reactable(searchable = TRUE, 
+            filterable = TRUE,
+            sortable = TRUE,
+            showSortable = TRUE,
+            resizable = TRUE,
+            static = FALSE,
+            compact = TRUE, 
+            height = 600,
+            showPageSizeOptions = TRUE, 
+            pageSizeOptions = c(10, 25, 50, 100, 500, 1000),
+            defaultPageSize = 25,
+            defaultColDef = colDef(minWidth = 100)
+  )
+```
+
 ::::
 
 ## Truth Commissions
@@ -209,29 +285,6 @@ read_csv("_data/tcs.csv") %>%
   )
 ```
 
-## Reparation
-
-``` {r}
-#| echo: false
-#| warning: false
-read_csv("_data/reparations.csv") %>% 
-  rename(ID = reparationID, 
-         Country = countryID) %>% 
-  reactable(searchable = TRUE, 
-            filterable = TRUE,
-            sortable = TRUE,
-            showSortable = TRUE,
-            resizable = TRUE,
-            static = FALSE,
-            compact = TRUE, 
-            height = 600,
-            showPageSizeOptions = TRUE, 
-            pageSizeOptions = c(10, 25, 50, 100, 500, 1000),
-            defaultPageSize = 25,
-            defaultColDef = colDef(minWidth = 100)
-  )
-```
-
 ## Vetting
 
 ``` {r}
@@ -239,29 +292,6 @@ read_csv("_data/reparations.csv") %>%
 #| warning: false
 read_csv("_data/vettings.csv") %>% 
   rename(ID = vettingID, 
-         Country = countryID) %>% 
-  reactable(searchable = TRUE, 
-            filterable = TRUE,
-            sortable = TRUE,
-            showSortable = TRUE,
-            resizable = TRUE,
-            static = FALSE,
-            compact = TRUE, 
-            height = 600,
-            showPageSizeOptions = TRUE, 
-            pageSizeOptions = c(10, 25, 50, 100, 500, 1000),
-            defaultPageSize = 25,
-            defaultColDef = colDef(minWidth = 100)
-  )
-```
-
-## Customary Justice
-
-``` {r}
-#| echo: false
-#| warning: false
-read_csv("_data/customaryjustice.csv") %>% 
-  rename(ID = customaryjusticeID, 
          Country = countryID) %>% 
   reactable(searchable = TRUE, 
             filterable = TRUE,
