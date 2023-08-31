@@ -23,8 +23,66 @@ with_tooltip <- function(value, tooltip, ...) {
   div(style = "text-decoration: underline; text-decoration-style: dotted; cursor: help",
       tippy(value, tooltip, ...))
 }
-```
 
+filterFX <- function(element, label = "All") {
+  function(values, name) {
+    tags$select(
+      # Set to undefined to clear the filter
+      onchange = sprintf(
+        paste(
+          "Reactable.setFilter('", 
+          element, 
+          "', '%s', event.target.value || undefined)", 
+          sep = ""),
+        name
+      ),
+      # "All" has an empty value to clear the filter, and is the default option
+      tags$option(value = "", "All countries"),
+      lapply(sort(unique(values)), tags$option),
+      "aria-label" = sprintf("Filter %s", name),
+      style = "height: 100%; width: 99%"
+    )
+  }
+}
+
+reactableFX <- function(df, element, ...) {
+  htmltools::browsable(
+    tagList(
+      df %>% 
+        reactable(...,
+                  elementId = element, 
+                  searchable = TRUE, filterable = TRUE,
+                  sortable = TRUE, showSortable = TRUE,
+                  resizable = TRUE,
+                  borderless = FALSE, striped = FALSE,
+                  highlight = TRUE,
+                  static = TRUE,
+                  compact = FALSE, 
+                  bordered = FALSE,
+                  height = 500,
+                  pagination = FALSE,
+                  # showPageSizeOptions = TRUE, paginationType = "jump",
+                  # pageSizeOptions = c(10, 25, 50, 100, 500, 1000),
+                  # defaultPageSize = 25,
+                  defaultColDef = colDef(minWidth = 100),
+                  defaultExpanded = FALSE,
+                  onClick = "expand",
+                  language = reactableLang(
+                    searchPlaceholder = "Search keyword...",
+                    noData = "No entries found"
+                  ),
+                  theme = reactableTheme(
+                    searchInputStyle = list(width = "100%")
+                  )
+        ),
+      tags$button(
+        "Expand or collapse additional information",
+        onclick = paste("Reactable.toggleAllRowsExpanded('", element, "')", sep = "")
+      )
+    )
+  )
+}
+```
 
 ::: {.panel-tabset group="mechanism"}
 
@@ -42,78 +100,22 @@ df <- read_csv("_data/amnesties.csv", skip = 1) %>%
   left_join(ctry, by = c(countryID = "countryid"), keep = FALSE) %>% 
   select(amnestyID, country, amnestyYear, narrative) 
 
-htmltools::browsable(
-  tagList(
-    df %>% 
-      reactable(searchable = TRUE, 
-                filterable = TRUE,
-                sortable = TRUE,
-                showSortable = TRUE,
-                resizable = TRUE,
-                borderless = FALSE,
-                striped = FALSE,
-                highlight = TRUE,
-                static = TRUE,
-                compact = FALSE, 
-                bordered = FALSE,
-                height = 500,
-                pagination = FALSE,
-                # showPageSizeOptions = TRUE, 
-                # pageSizeOptions = c(10, 25, 50, 100, 500, 1000),
-                # defaultPageSize = 25,
-                # paginationType = "jump",
-                defaultColDef = colDef(minWidth = 100),
-                defaultSorted = list(amnestyID = "asc"),
-                columns = list(
-                  amnestyID = colDef(name = "ID", 
-                                     header = with_tooltip("ID", "Amnesty ID"),
-                                     filterable = FALSE,
-                                     width = 60),
-                  narrative = colDef(show = FALSE, searchable = TRUE),
-                  country = colDef(name = "Country", 
-                    filterInput = function(values, name) {
-                      tags$select(
-                        # Set to undefined to clear the filter
-                        onchange = sprintf("Reactable.setFilter('amnesties-temp', '%s', event.target.value || undefined)", name),
-                        # "All" has an empty value to clear the filter, and is the default option
-                        tags$option(value = "", "All countries"),
-                        lapply(sort(unique(values)), tags$option),
-                        "aria-label" = sprintf("Filter %s", name),
-                        style = "height: 100%; width: 99%"
-                      )
-                    }
-                  ),
-                  amnestyYear = colDef(name = "Year", 
-                                       width = 120,
-                    filterInput = function(values, name) {
-                      tags$select(
-                        onchange = sprintf("Reactable.setFilter('amnesties-temp', '%s', event.target.value || undefined)", name),
-                        tags$option(value = "", "All years"),
-                        lapply(sort(unique(values)), tags$option),
-                        "aria-label" = sprintf("Filter %s", name),
-                        style = "height: 100%; width: 99%"
-                      )
-                    }
-                  )
-                ),
-                details = function(index) paste("Narrative:", df[index, "narrative"]),
-                defaultExpanded = FALSE,
-                onClick = "expand",
-                language = reactableLang(
-                  searchPlaceholder = "Search keyword...",
-                  noData = "No entries found"
-                ),
-                theme = reactableTheme(
-                  searchInputStyle = list(width = "100%")
-                ),
-                elementId = "amnesties-temp"
-      ),
-    tags$button(
-      "Expand or collapse additional information",
-      onclick = "Reactable.toggleAllRowsExpanded('amnesties-temp')"
-    )
+
+df %>% 
+  reactableFX(element = "tab_amnesties", 
+              defaultSorted = list(amnestyID = "asc"),
+              columns = list(
+                amnestyID = colDef(header = with_tooltip("ID", "Amnesty ID"), width = 60),
+                narrative = colDef(show = FALSE, searchable = TRUE),
+                country = colDef(name = "Country", 
+                                 filterInput = filterFX(element = "tab_amnesties", label = "All countries")
+                ), 
+                amnestyYear = colDef(name = "Year", width = 120,
+                                     filterInput = filterFX(element = "tab_amnesties", label = "All years")
+                )
+              ),
+              details = function(index) paste("Narrative:", df[index, "narrative"])
   )
-)
 ```
 
 ## Challenges 
@@ -123,19 +125,7 @@ htmltools::browsable(
 #| warning: false
 read_csv("_data/challenges.csv", skip = 1) %>% 
   left_join(df %>% select(amnestyID, country), by = "amnestyID", keep = FALSE) %>% 
-  reactable(searchable = TRUE, 
-            filterable = TRUE,
-            sortable = TRUE,
-            showSortable = TRUE,
-            resizable = TRUE,
-            static = FALSE,
-            compact = TRUE, 
-            height = 600,
-            showPageSizeOptions = TRUE, 
-            pageSizeOptions = c(10, 25, 50, 100, 500, 1000),
-            defaultPageSize = 25,
-            defaultColDef = colDef(minWidth = 100)
-  )
+  reactableFX(element = "tab_challenges")
 ```
 
 ::::
@@ -148,21 +138,7 @@ read_csv("_data/challenges.csv", skip = 1) %>%
 
 read_csv("_data/customaryjustice.csv", skip = 1) %>% 
   left_join(ctry, by = c(countryID = "countryid"), keep = FALSE) %>% 
-  rename(ID = customaryjusticeID, 
-         Country = countryID) %>% 
-  reactable(searchable = TRUE, 
-            filterable = TRUE,
-            sortable = TRUE,
-            showSortable = TRUE,
-            resizable = TRUE,
-            static = FALSE,
-            compact = TRUE, 
-            height = 600,
-            showPageSizeOptions = TRUE, 
-            pageSizeOptions = c(10, 25, 50, 100, 500, 1000),
-            defaultPageSize = 25,
-            defaultColDef = colDef(minWidth = 100)
-  )
+  reactableFX(element = "tab_customary")
 ```
 
 ## Reparation
@@ -172,21 +148,7 @@ read_csv("_data/customaryjustice.csv", skip = 1) %>%
 #| warning: false
 read_csv("_data/reparations.csv", skip = 1) %>% 
   left_join(ctry, by = c(countryID = "countryid"), keep = FALSE) %>% 
-  rename(ID = reparationID, 
-         Country = countryID) %>% 
-  reactable(searchable = TRUE, 
-            filterable = TRUE,
-            sortable = TRUE,
-            showSortable = TRUE,
-            resizable = TRUE,
-            static = FALSE,
-            compact = TRUE, 
-            height = 600,
-            showPageSizeOptions = TRUE, 
-            pageSizeOptions = c(10, 25, 50, 100, 500, 1000),
-            defaultPageSize = 25,
-            defaultColDef = colDef(minWidth = 100)
-  )
+  reactableFX(element = "tab_reparations")
 ```
 
 ## Trials
@@ -198,26 +160,12 @@ read_csv("_data/reparations.csv", skip = 1) %>%
 ``` {r}
 #| echo: false
 #| warning: false
-
 df <- read_csv("_data/trials.csv", skip = 1) %>% 
   left_join(ctry, by = c(countryID = "countryid"), keep = FALSE)
 
 df %>% 
   filter(trialType == 3) %>% 
-  rename(ID = trialID) %>% 
-  reactable(searchable = TRUE, 
-            filterable = TRUE,
-            sortable = TRUE,
-            showSortable = TRUE,
-            resizable = TRUE,
-            static = FALSE,
-            compact = TRUE, 
-            height = 600,
-            showPageSizeOptions = TRUE, 
-            pageSizeOptions = c(10, 25, 50, 100, 500, 1000),
-            defaultPageSize = 25,
-            defaultColDef = colDef(minWidth = 100)
-  )
+  reactableFX(element = "tab_intl")
 ```
 
 ## Foreign 
@@ -227,20 +175,7 @@ df %>%
 #| warning: false
 df %>% 
   filter(trialType == 2) %>%
-  rename(ID = trialID) %>% 
-  reactable(searchable = TRUE, 
-            filterable = TRUE,
-            sortable = TRUE,
-            showSortable = TRUE,
-            resizable = TRUE,
-            static = FALSE,
-            compact = TRUE, 
-            height = 600,
-            showPageSizeOptions = TRUE, 
-            pageSizeOptions = c(10, 25, 50, 100, 500, 1000),
-            defaultPageSize = 25,
-            defaultColDef = colDef(minWidth = 100)
-  )
+  reactableFX(element = "tab_foreign")
 ```
 
 ## Domestic 
@@ -250,20 +185,7 @@ df %>%
 #| warning: false
 df %>% 
   filter(trialType == 1) %>% 
-  rename(ID = trialID) %>% 
-  reactable(searchable = TRUE, 
-            filterable = TRUE,
-            sortable = TRUE,
-            showSortable = TRUE,
-            resizable = TRUE,
-            static = FALSE,
-            compact = TRUE, 
-            height = 600,
-            showPageSizeOptions = TRUE, 
-            pageSizeOptions = c(10, 25, 50, 100, 500, 1000),
-            defaultPageSize = 25,
-            defaultColDef = colDef(minWidth = 100)
-  )
+  reactableFX(element = "tab_domestic")
 ```
 
 ## Civil 
@@ -273,20 +195,7 @@ df %>%
 #| warning: false
 read_csv("_data/civiltrials.csv", skip = 1) %>% 
   left_join(ctry, by = c(countryViolationID = "countryid"), keep = FALSE) %>% 
-  rename(ID = civiltrialID) %>% 
-  reactable(searchable = TRUE, 
-            filterable = TRUE,
-            sortable = TRUE,
-            showSortable = TRUE,
-            resizable = TRUE,
-            static = FALSE,
-            compact = TRUE, 
-            height = 600,
-            showPageSizeOptions = TRUE, 
-            pageSizeOptions = c(10, 25, 50, 100, 500, 1000),
-            defaultPageSize = 25,
-            defaultColDef = colDef(minWidth = 100)
-  )
+  reactableFX(element = "tab_civiltrials") 
 ```
 
 ## The Accused 
@@ -294,22 +203,21 @@ read_csv("_data/civiltrials.csv", skip = 1) %>%
 ``` {r}
 #| echo: false
 #| warning: false
-
 read_csv("_data/accusations.csv", skip = 1) %>% 
   left_join(df %>% select(trialID, country), by = "trialID", keep = FALSE) %>%
-  rename(ID = accusationID) %>% 
-  reactable(searchable = TRUE, 
-            filterable = TRUE,
-            sortable = TRUE,
-            showSortable = TRUE,
-            resizable = TRUE,
-            static = FALSE,
-            compact = TRUE, 
-            height = 600,
-            showPageSizeOptions = TRUE, 
-            pageSizeOptions = c(10, 25, 50, 100, 500, 1000),
-            defaultPageSize = 25,
-            defaultColDef = colDef(minWidth = 100)
+  mutate(guiltySentence = ifelse(is.na(guiltySentence), pleaBargainSentence, guiltySentence) ) %>% 
+  select(accusationID, trialID, nameOrDesc, charges, trialCourtType, outcomeYear, verdict, guiltySentence, membership, stateAgent, lowhighrank, trialReleventInfo) %>% 
+  reactableFX(element = "tab_accusations", 
+              columns = list(
+                accusationID = colDef(header = with_tooltip("ID", "Accused ID"), width = 60),
+                trialID = colDef(header = with_tooltip("Trial ID", "ID of this accused's trial")),
+                nameOrDesc = colDef(name = "Name"),
+                trialCourtType = colDef(header = with_tooltip("Type", "Trial Type")),
+                outcomeYear = colDef(header = with_tooltip("Outcome Year", "Year of verdict")),
+                charges = colDef(show = FALSE, searchable = TRUE),
+                guiltySentence = colDef(show = FALSE, searchable = TRUE),
+                trialReleventInfo = colDef(show = FALSE, searchable = TRUE)
+              )
   )
 ```
 
@@ -322,21 +230,7 @@ read_csv("_data/accusations.csv", skip = 1) %>%
 #| warning: false
 read_csv("_data/tcs.csv", skip = 1) %>% 
   left_join(ctry, by = c(countryID = "countryid"), keep = FALSE) %>% 
-  rename(ID = truthcommissionID, 
-         Country = countryID) %>% 
-  reactable(searchable = TRUE, 
-            filterable = TRUE,
-            sortable = TRUE,
-            showSortable = TRUE,
-            resizable = TRUE,
-            static = FALSE,
-            compact = TRUE, 
-            height = 600,
-            showPageSizeOptions = TRUE, 
-            pageSizeOptions = c(10, 25, 50, 100, 500, 1000),
-            defaultPageSize = 25,
-            defaultColDef = colDef(minWidth = 100)
-  )
+  reactableFX(element = "tab_tcs")
 ```
 
 ## Vetting
@@ -346,21 +240,7 @@ read_csv("_data/tcs.csv", skip = 1) %>%
 #| warning: false
 read_csv("_data/vettings.csv", skip = 1) %>% 
   left_join(ctry, by = c(countryID = "countryid"), keep = FALSE) %>% 
-  rename(ID = vettingID, 
-         Country = countryID) %>% 
-  reactable(searchable = TRUE, 
-            filterable = TRUE,
-            sortable = TRUE,
-            showSortable = TRUE,
-            resizable = TRUE,
-            static = FALSE,
-            compact = TRUE, 
-            height = 600,
-            showPageSizeOptions = TRUE, 
-            pageSizeOptions = c(10, 25, 50, 100, 500, 1000),
-            defaultPageSize = 25,
-            defaultColDef = colDef(minWidth = 100)
-  )
+  reactableFX(element = "tab_vettings")
 ```
 
 :::
