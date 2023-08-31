@@ -37,7 +37,7 @@ filterFX <- function(element, label = "All") {
         name
       ),
       # "All" has an empty value to clear the filter, and is the default option
-      tags$option(value = "", "All countries"),
+      tags$option(value = "", label),
       lapply(sort(unique(values)), tags$option),
       "aria-label" = sprintf("Filter %s", name),
       style = "height: 100%; width: 99%"
@@ -53,17 +53,15 @@ reactableFX <- function(df, element, ...) {
                   elementId = element, 
                   searchable = TRUE, filterable = TRUE,
                   sortable = TRUE, showSortable = TRUE,
-                  resizable = TRUE,
-                  borderless = FALSE, striped = FALSE,
-                  highlight = TRUE,
-                  static = TRUE,
+                  resizable = TRUE, highlight = TRUE,
+                  bordered = FALSE, borderless = FALSE, striped = FALSE,
                   compact = FALSE, 
-                  bordered = FALSE,
+                  static = FALSE,
                   height = 500,
-                  pagination = FALSE,
-                  # showPageSizeOptions = TRUE, paginationType = "jump",
-                  # pageSizeOptions = c(10, 25, 50, 100, 500, 1000),
-                  # defaultPageSize = 25,
+                  pagination = TRUE,
+                  showPageSizeOptions = TRUE, paginationType = "jump",
+                  pageSizeOptions = c(25, 50, 100, 500),
+                  defaultPageSize = 25,
                   defaultColDef = colDef(minWidth = 100),
                   defaultExpanded = FALSE,
                   onClick = "expand",
@@ -98,23 +96,37 @@ reactableFX <- function(df, element, ...) {
 
 df <- read_csv("_data/amnesties.csv", skip = 1) %>%
   left_join(ctry, by = c(countryID = "countryid"), keep = FALSE) %>% 
-  select(amnestyID, country, amnestyYear, narrative) 
-
+  mutate(amnestyFit = ifelse(amnestyFit == 1, "yes", "no"), 
+         amnestyName = str_squish(amnestyName), 
+         mechanismDescription = str_squish(mechanismDescription), 
+         narrative = str_squish(narrative)) %>% 
+  select(amnestyID, country, amnestyYear, amnestyFit, amnestyName, 
+         mechanismDescription, narrative) 
 
 df %>% 
   reactableFX(element = "tab_amnesties", 
               defaultSorted = list(amnestyID = "asc"),
               columns = list(
-                amnestyID = colDef(header = with_tooltip("ID", "Amnesty ID"), width = 60),
-                narrative = colDef(show = FALSE, searchable = TRUE),
-                country = colDef(name = "Country", 
-                                 filterInput = filterFX(element = "tab_amnesties", label = "All countries")
-                ), 
-                amnestyYear = colDef(name = "Year", width = 120,
-                                     filterInput = filterFX(element = "tab_amnesties", label = "All years")
-                )
+                amnestyID = colDef(header = with_tooltip("ID", "Amnesty ID"), 
+                                   filterInput = filterFX(element = "tab_amnesties", 
+                                                          label = "All"),
+                                   width = 80),
+                country = colDef(name = "Country", minWidth = 140, 
+                                 filterInput = filterFX(element = "tab_amnesties", 
+                                                        label = "All countries")), 
+                amnestyYear = colDef(name = "Year", width = 110,
+                                     filterInput = filterFX(element = "tab_amnesties", 
+                                                            label = "All years")), 
+                amnestyFit = colDef(header = with_tooltip("TJ", "fits TJ definition"), 
+                                    filterInput = filterFX(element = "tab_amnesties"), 
+                                    width = 60),
+                amnestyName = colDef(name = "Name", minWidth = 200),
+                mechanismDescription = colDef(show = FALSE, searchable = TRUE),
+                narrative = colDef(show = FALSE, searchable = TRUE)
               ),
-              details = function(index) paste("Narrative:", df[index, "narrative"])
+              details = function(index) paste(df[index, "mechanismDescription"], 
+                                              ": ", 
+                                              df[index, "narrative"]) 
   )
 ```
 
@@ -123,9 +135,37 @@ df %>%
 ``` {r}
 #| echo: false
 #| warning: false
-read_csv("_data/challenges.csv", skip = 1) %>% 
+df <- read_csv("_data/challenges.csv", skip = 1) %>% 
   left_join(df %>% select(amnestyID, country), by = "amnestyID", keep = FALSE) %>% 
-  reactableFX(element = "tab_challenges")
+  mutate(description = str_squish(description), 
+         notes = str_squish(notes)) %>% 
+  select(challengeID, amnestyID, country, dateYear, description, notes) 
+
+df %>% 
+  reactableFX(element = "tab_challenges",
+              defaultSorted = list(amnestyID = "asc", 
+                                   challengeID = "asc"),
+              columns = list(
+                challengeID = colDef(header = with_tooltip("ID", "Challenge ID"), 
+                                     filterInput = filterFX(element = "tab_challenges", 
+                                                            label = "All"),
+                                     width = 80),
+                amnestyID = colDef(header = with_tooltip("Amnesty ID", 
+                                                         "ID of the associated amnesty"),
+                                   filterInput = filterFX(element = "tab_challenges", 
+                                                            label = "All"),
+                                   width = 140),
+                country = colDef(name = "Country", minWidth = 140, 
+                                 filterInput = filterFX(element = "tab_challenges", 
+                                                        label = "All countries")), 
+                dateYear = colDef(name = "Year", width = 110,
+                                     filterInput = filterFX(element = "tab_challenges", 
+                                                            label = "All years")), 
+                description = colDef(name = "Description", minWidth = 200),
+                notes = colDef(show = FALSE, searchable = TRUE)
+              ),
+              details = function(index) paste(df[index, "notes"])
+  )
 ```
 
 ::::
@@ -135,10 +175,38 @@ read_csv("_data/challenges.csv", skip = 1) %>%
 ``` {r}
 #| echo: false
 #| warning: false
-
-read_csv("_data/customaryjustice.csv", skip = 1) %>% 
+df <- read_csv("_data/customaryjustice.csv", skip = 1) %>% 
   left_join(ctry, by = c(countryID = "countryid"), keep = FALSE) %>% 
-  reactableFX(element = "tab_customary")
+  mutate(customaryFitsDefinition = ifelse(customaryFitsDefinition == 1, "yes", "no"), 
+         name = str_replace(name, country, ""),
+         name = str_replace(name, "PNG", ""),
+         name = str_replace(name, fixed("()"), ""), 
+         name = str_squish(name), 
+         narrative = str_squish(narrative)) %>% 
+  select(customaryjusticeID, country, year, customaryFitsDefinition, name, narrative)
+  
+df %>% 
+  reactableFX(element = "tab_customary",
+              defaultSorted = list(customaryjusticeID = "asc"),
+              columns = list(
+                customaryjusticeID = colDef(header = with_tooltip("ID", "Customary Justice ID"), 
+                                            filterInput = filterFX(element = "tab_customary", 
+                                                            label = "All"),
+                                            width = 80),
+                country = colDef(name = "Country", minWidth = 140, 
+                                 filterInput = filterFX(element = "tab_customary", 
+                                                        label = "All countries")), 
+                year = colDef(name = "Year", width = 110,
+                              filterInput = filterFX(element = "tab_customary", 
+                                                     label = "All years")), 
+                customaryFitsDefinition = colDef(header = with_tooltip("TJ", "fits TJ definition"), 
+                                                 filterInput = filterFX(element = "tab_customary"), 
+                                                 width = 60),
+                name = colDef(name = "Name", minWidth = 200),
+                narrative = colDef(show = FALSE, searchable = TRUE)
+              ),
+              details = function(index) paste(df[index, "narrative"])
+  )
 ```
 
 ## Reparation
@@ -146,9 +214,41 @@ read_csv("_data/customaryjustice.csv", skip = 1) %>%
 ``` {r}
 #| echo: false
 #| warning: false
-read_csv("_data/reparations.csv", skip = 1) %>% 
+df <- read_csv("_data/reparations.csv", skip = 1) %>% 
   left_join(ctry, by = c(countryID = "countryid"), keep = FALSE) %>% 
-  reactableFX(element = "tab_reparations")
+  mutate(reparationFitsDefinition = ifelse(reparationFitsDefinition == 1, "yes", "no"), 
+         officialName = str_replace(officialName, country, ""),
+         officialName = str_replace(officialName, "PNG", ""),
+         officialName = str_replace(officialName, "USA", ""),
+         officialName = str_replace(officialName, " States", ""),
+         officialName = str_replace(officialName, "Ivory Coast", ""),
+         officialName = str_replace(officialName, fixed("()"), ""),
+         officialName = str_squish(officialName), 
+         narrative = str_squish(narrative)) %>% 
+  select(reparationID, country, year, reparationFitsDefinition, officialName, narrative) 
+  
+df %>% 
+  reactableFX(element = "tab_reparations",
+              defaultSorted = list(reparationID = "asc"),
+              columns = list(
+                reparationID = colDef(header = with_tooltip("ID", "Reparation ID"), 
+                                      filterInput = filterFX(element = "tab_reparations", 
+                                                            label = "All"),
+                                      width = 80),
+                country = colDef(name = "Country", minWidth = 140, 
+                                 filterInput = filterFX(element = "tab_reparations", 
+                                                        label = "All countries")), 
+                year = colDef(name = "Year", width = 110,
+                              filterInput = filterFX(element = "tab_reparations", 
+                                                     label = "All years")), 
+                reparationFitsDefinition = colDef(header = with_tooltip("TJ", "fits TJ definition"), 
+                                                  filterInput = filterFX(element = "tab_reparations"), 
+                                                  width = 60),
+                officialName = colDef(name = "Name", minWidth = 200),
+                narrative = colDef(show = FALSE, searchable = TRUE)
+              ),
+              details = function(index) paste(df[index, "narrative"])
+  )
 ```
 
 ## Trials
@@ -161,11 +261,50 @@ read_csv("_data/reparations.csv", skip = 1) %>%
 #| echo: false
 #| warning: false
 df <- read_csv("_data/trials.csv", skip = 1) %>% 
-  left_join(ctry, by = c(countryID = "countryid"), keep = FALSE)
-
+  left_join(ctry, by = c(countryID = "countryid"), keep = FALSE) %>% 
+  mutate(trialDemTransSample = ifelse(trialDemTransSample == 1, "yes", "no"), 
+         caseDescription = str_squish(caseDescription), 
+         narrative = str_squish(narrative)) %>%  
+  select(trialID, country, trialType, yearStart, yearEnd, trialDemTransSample,
+         numberOfAccused, caseDescription, narrative)
+  
 df %>% 
   filter(trialType == 3) %>% 
-  reactableFX(element = "tab_intl")
+  reactableFX(element = "tab_intl",
+              defaultSorted = list(trialID = "asc"),
+              columns = list(
+                trialID = colDef(header = with_tooltip("ID", "Trial ID"), 
+                                 filterInput = filterFX(element = "tab_intl", 
+                                                        label = "All"),
+                                 width = 80),
+                country = colDef(name = "Country", minWidth = 140, 
+                                 filterInput = filterFX(element = "tab_intl", 
+                                                        label = "All countries")), 
+                trialType = colDef(show = FALSE, searchable = FALSE),
+                yearStart = colDef(header = with_tooltip("Start", "Year Began"),
+                                   width = 105,
+                                   filterInput = filterFX(element = "tab_intl", 
+                                                          label = "All years")), 
+                yearEnd = colDef(header = with_tooltip("End", "Year Ended"),
+                                   width = 105,
+                                   filterInput = filterFX(element = "tab_intl", 
+                                                          label = "All years")), 
+                trialDemTransSample = colDef(header = with_tooltip("Transition", 
+                                                                   "Context of democratic transition?"), 
+                                             filterInput = filterFX(element = "tab_intl"), 
+                                             width = 120),
+                numberOfAccused = colDef(header = with_tooltip("Accused", "Number of Accused"), 
+                                         filterInput = filterFX(element = "tab_intl"), 
+                                         width = 110),
+                # caseDescription = colDef(name = "Description", minWidth = 200),
+                caseDescription = colDef(show = FALSE, searchable = TRUE),
+                narrative = colDef(show = FALSE, searchable = TRUE)
+              ),
+              details = function(index) paste(df[index, "caseDescription"], 
+                                              ": ",
+                                              df[index, "narrative"],
+                                              sep = "")
+  )
 ```
 
 ## Foreign 
@@ -175,7 +314,41 @@ df %>%
 #| warning: false
 df %>% 
   filter(trialType == 2) %>%
-  reactableFX(element = "tab_foreign")
+  reactableFX(element = "tab_foreign",
+              defaultSorted = list(trialID = "asc"),
+              columns = list(
+                trialID = colDef(header = with_tooltip("ID", "Trial ID"), 
+                                 filterInput = filterFX(element = "tab_foreign", 
+                                                        label = "All"),
+                                 width = 80),
+                country = colDef(name = "Country", minWidth = 140, 
+                                 filterInput = filterFX(element = "tab_foreign", 
+                                                        label = "All countries")), 
+                trialType = colDef(show = FALSE, searchable = FALSE),
+                yearStart = colDef(header = with_tooltip("Start", "Year Began"),
+                                   width = 105,
+                                   filterInput = filterFX(element = "tab_foreign", 
+                                                          label = "All years")), 
+                yearEnd = colDef(header = with_tooltip("End", "Year Ended"),
+                                   width = 105,
+                                   filterInput = filterFX(element = "tab_foreign", 
+                                                          label = "All years")), 
+                trialDemTransSample = colDef(header = with_tooltip("Transition", 
+                                                                   "Context of democratic transition?"), 
+                                             filterInput = filterFX(element = "tab_foreign"), 
+                                             width = 120),
+                numberOfAccused = colDef(header = with_tooltip("Accused", "Number of Accused"), 
+                                         filterInput = filterFX(element = "tab_foreign"), 
+                                         width = 110),
+                # caseDescription = colDef(name = "Description", minWidth = 200),
+                caseDescription = colDef(show = FALSE, searchable = TRUE),
+                narrative = colDef(show = FALSE, searchable = TRUE)
+              ),
+              details = function(index) paste(df[index, "caseDescription"], 
+                                              ": ",
+                                              df[index, "narrative"],
+                                              sep = "")
+  )
 ```
 
 ## Domestic 
@@ -184,18 +357,42 @@ df %>%
 #| echo: false
 #| warning: false
 df %>% 
-  filter(trialType == 1) %>% 
-  reactableFX(element = "tab_domestic")
-```
-
-## Civil 
-
-``` {r}
-#| echo: false
-#| warning: false
-read_csv("_data/civiltrials.csv", skip = 1) %>% 
-  left_join(ctry, by = c(countryViolationID = "countryid"), keep = FALSE) %>% 
-  reactableFX(element = "tab_civiltrials") 
+  filter(trialType %in% c(1, 0, 99))  %>% 
+  reactableFX(element = "tab_domestic",
+              defaultSorted = list(trialID = "asc"),
+              columns = list(
+                trialID = colDef(header = with_tooltip("ID", "Trial ID"), 
+                                 filterInput = filterFX(element = "tab_domestic", 
+                                                        label = "All"),
+                                 width = 80),
+                country = colDef(name = "Country", minWidth = 140, 
+                                 filterInput = filterFX(element = "tab_domestic", 
+                                                        label = "All countries")), 
+                trialType = colDef(show = FALSE, searchable = FALSE),
+                yearStart = colDef(header = with_tooltip("Start", "Year Began"),
+                                   width = 105,
+                                   filterInput = filterFX(element = "tab_domestic", 
+                                                          label = "All years")), 
+                yearEnd = colDef(header = with_tooltip("End", "Year Ended"),
+                                   width = 105,
+                                   filterInput = filterFX(element = "tab_domestic", 
+                                                          label = "All years")), 
+                trialDemTransSample = colDef(header = with_tooltip("Transition", 
+                                                                   "Context of democratic transition?"), 
+                                             filterInput = filterFX(element = "tab_domestic"), 
+                                             width = 120),
+                numberOfAccused = colDef(header = with_tooltip("Accused", "Number of Accused"), 
+                                         filterInput = filterFX(element = "tab_domestic"), 
+                                         width = 110),
+                # caseDescription = colDef(name = "Description", minWidth = 200),
+                caseDescription = colDef(show = FALSE, searchable = TRUE),
+                narrative = colDef(show = FALSE, searchable = TRUE)
+              ),
+              details = function(index) paste(df[index, "caseDescription"], 
+                                              ": ",
+                                              df[index, "narrative"],
+                                              sep = "")
+  )
 ```
 
 ## The Accused 
@@ -203,22 +400,146 @@ read_csv("_data/civiltrials.csv", skip = 1) %>%
 ``` {r}
 #| echo: false
 #| warning: false
-read_csv("_data/accusations.csv", skip = 1) %>% 
+df <- read_csv("_data/accusations.csv", skip = 1) %>% 
   left_join(df %>% select(trialID, country), by = "trialID", keep = FALSE) %>%
-  mutate(guiltySentence = ifelse(is.na(guiltySentence), pleaBargainSentence, guiltySentence) ) %>% 
-  select(accusationID, trialID, nameOrDesc, charges, trialCourtType, outcomeYear, verdict, guiltySentence, membership, stateAgent, lowhighrank, trialReleventInfo) %>% 
+  mutate(outcomeYear = ifelse(outcomeYear == 0, NA, outcomeYear), 
+         guiltySentence = ifelse(is.na(guiltySentence), pleaBargainSentence, guiltySentence),
+         trialReleventInfo = str_squish(trialReleventInfo),
+         trialCourtType = case_when(trialCourtType == 1 ~ "domestic",
+                                    trialCourtType == 2 ~ "foreign", 
+                                    trialCourtType == 3 ~ "international", 
+                                    trialCourtType == 99 ~ "unknown"),
+         stateAgent = case_when(stateAgent == 1 ~ "yes",
+                                stateAgent == 2 ~ "no",
+                                stateAgent == 99 ~ NA),
+         verdict = case_when(verdict == 1 ~ "Guilty",
+                             verdict == 2 ~ "Acquittal",
+                             verdict == 3 ~ "Plea Bargain",
+                             verdict == 4 ~ "Dismissal",
+                             verdict == 5 ~ "Pending",
+                             verdict == 6 ~ "Guilty overturned",
+                             verdict == 7 ~ "Acquittal overturned",
+                             verdict == 8 ~ "Transferred",
+                             verdict == 9 ~ "Transferred",
+                             verdict == 99 ~ "unknown"),
+         membership = case_when(membership == 0 ~ NA,
+                                membership == 1 ~ "current state agent",
+                                membership == 2 ~ "former state agent",
+                                membership == 3 ~ "opposition",
+                                membership == 4 ~ "state agent in other country",
+                                membership == 99 ~ "unknown"),
+         lowhighrank = ifelse(lowhighrank == 99, NA, lowhighrank),
+         lowhighrank = ifelse(lowhighrank == 1, "yes", "no")) %>% 
+  select(accusationID, trialID, country, outcomeYear, nameOrDesc, 
+         trialCourtType, verdict, guiltySentence, 
+         stateAgent, lowhighrank, membership,
+         charges, trialReleventInfo)
+  
+df %>% 
   reactableFX(element = "tab_accusations", 
+              defaultSorted = list(accusationID = "asc"),
               columns = list(
-                accusationID = colDef(header = with_tooltip("ID", "Accused ID"), width = 60),
-                trialID = colDef(header = with_tooltip("Trial ID", "ID of this accused's trial")),
-                nameOrDesc = colDef(name = "Name"),
-                trialCourtType = colDef(header = with_tooltip("Type", "Trial Type")),
-                outcomeYear = colDef(header = with_tooltip("Outcome Year", "Year of verdict")),
+                accusationID = colDef(header = with_tooltip("ID", "Trial ID"), 
+                                      filterInput = filterFX(element = "tab_accusations", 
+                                                             label = "All"),
+                                      width = 80),
+                trialID = colDef(header = with_tooltip("Trial ID", 
+                                                         "ID of the associated trial"),
+                                 filterInput = filterFX(element = "tab_accusations", 
+                                                        label = "All"),
+                                 width = 90),
+                country = colDef(name = "Country", minWidth = 140, 
+                                 filterInput = filterFX(element = "tab_accusations", 
+                                                        label = "All countries")), 
+                outcomeYear = colDef(header = with_tooltip("Year", "Year of Outcome or Verdict"),
+                                     width = 110,
+                                     filterInput = filterFX(element = "tab_accusations", 
+                                                            label = "All years")), 
+                nameOrDesc = colDef(name = "Name", minWidth = 200),
+                trialCourtType = colDef(header = with_tooltip("Type", "Trial Type"), 
+                                        filterInput = filterFX(element = "tab_accusations", 
+                                                             label = "All"),
+                                        width = 120),
+                verdict = colDef(name = "Verdict",
+                                 filterInput = filterFX(element = "tab_accusations", 
+                                                             label = "All")), 
+                guiltySentence = colDef(name = "Sentence",
+                                        width = 140), 
+                stateAgent = colDef(name = "State Agent?",
+                                    filterInput = filterFX(element = "tab_accusations", 
+                                                             label = "All")), 
+                lowhighrank = colDef(name = "High Rank?",
+                                     filterInput = filterFX(element = "tab_accusations", 
+                                                             label = "All")), 
+                membership = colDef(name = "Membership",
+                                    filterInput = filterFX(element = "tab_accusations", 
+                                                             label = "All"),
+                                    width = 140), 
                 charges = colDef(show = FALSE, searchable = TRUE),
-                guiltySentence = colDef(show = FALSE, searchable = TRUE),
                 trialReleventInfo = colDef(show = FALSE, searchable = TRUE)
-              )
+              ),
+              details = function(index) paste("Charges: ", 
+                                              df[index, "charges"], 
+                                              ". Notes: ",
+                                              df[index, "trialReleventInfo"], 
+                                              sep = "")
   )
+```
+
+## Civil 
+
+``` {r}
+#| echo: false
+#| warning: false
+df <- read_csv("_data/civiltrials.csv", skip = 1) %>% 
+  left_join(ctry, by = c(countryViolationID = "countryid"), keep = FALSE) %>% 
+  rename(countryViolation = "country") %>% 
+  left_join(ctry, by = c(countryTrialID = "countryid"), keep = FALSE) %>% 
+  rename(countryTrial = "country") %>% 
+  mutate(civilFitsDefinition = ifelse(civilFitsDefinition == 1, "yes", "no"), 
+         name = str_squish(name), 
+         narrative = str_squish(narrative)) %>% 
+  select(civiltrialID, countryViolation, countryTrial, yearStarted, yearOutcome, 
+         civilFitsDefinition, type, name, narrative) 
+
+df %>% 
+  reactableFX(element = "tab_civiltrials",
+              defaultSorted = list(civiltrialID = "asc"),
+              columns = list(
+                civiltrialID = colDef(header = with_tooltip("ID", "Trial ID"), 
+                                      filterInput = filterFX(element = "tab_civiltrials", 
+                                                             label = "All"),
+                                      width = 80),
+                countryViolation = colDef(header = with_tooltip("Country", "Country of Violation"),
+                                          minWidth = 140, 
+                                          filterInput = filterFX(element = "tab_civiltrials", 
+                                                                 label = "All countries")), 
+                countryTrial = colDef(header = with_tooltip("Trial in", "Country of Trial"),
+                                      minWidth = 140, 
+                                      filterInput = filterFX(element = "tab_civiltrials", 
+                                                             label = "All countries")), 
+                yearStarted = colDef(header = with_tooltip("Start", "Year Began"),
+                                   width = 105,
+                                   filterInput = filterFX(element = "tab_civiltrials", 
+                                                          label = "All years")), 
+                yearOutcome = colDef(header = with_tooltip("End", "Year Ended"),
+                                   width = 105,
+                                   filterInput = filterFX(element = "tab_civiltrials", 
+                                                          label = "All years")), 
+                civilFitsDefinition = colDef(header = with_tooltip("TJ", "fits TJ definition"), 
+                                             filterInput = filterFX(element = "tab_civiltrials"), 
+                                             width = 60),
+                type = colDef(header = with_tooltip("Type", "?"), 
+                              filterInput = filterFX(element = "tab_civiltrials"), 
+                              width = 110),
+                name = colDef(show = FALSE, searchable = TRUE),
+                narrative = colDef(show = FALSE, searchable = TRUE)
+              ),
+              details = function(index) paste(df[index, "name"], 
+                                              ": ",
+                                              df[index, "narrative"],
+                                              sep = "")
+  ) 
 ```
 
 ::::
@@ -228,9 +549,67 @@ read_csv("_data/accusations.csv", skip = 1) %>%
 ``` {r}
 #| echo: false
 #| warning: false
-read_csv("_data/tcs.csv", skip = 1) %>% 
+df <- read_csv("_data/tcs.csv", skip = 1) %>% 
   left_join(ctry, by = c(countryID = "countryid"), keep = FALSE) %>% 
-  reactableFX(element = "tab_tcs")
+  mutate(tcFitsDefinition = ifelse(tcFitsDefinition == 1, "yes", "no"),
+         dateCompleteOperation = str_replace(dateCompleteOperation, "Ongoing", ""),
+         dateCompleteOperation = str_replace(dateCompleteOperation, "ongoing", ""),
+         dateCompleteOperation = as.integer(dateCompleteOperation),
+         dateReportIssued = str_replace(dateReportIssued, "TBD", ""),
+         dateReportIssued = as.integer(dateReportIssued),
+         reportPubliclyAvailable = case_when(reportPubliclyAvailable == 1 ~ "yes",
+                                             reportPubliclyAvailable == 2 ~ "no", 
+                                             reportPubliclyAvailable == 3 ~ "unknown"),
+         officialName = str_replace(officialName, country, ""),
+         officialName = str_replace(officialName, "ublic", ""),
+         officialName = str_replace(officialName, fixed("()"), ""),
+         officialName = str_squish(officialName), 
+         narrative = str_squish(narrative)) %>% 
+  select(truthcommissionID, country, yearPassed, tcFitsDefinition, officialName, 
+         dateBeginOperation, dateCompleteOperation, dateReportIssued, 
+         reportPubliclyAvailable, narrative) 
+
+df %>% 
+  reactableFX(element = "tab_tcs",
+              defaultSorted = list(truthcommissionID = "asc"),
+              columns = list(
+                truthcommissionID = colDef(header = with_tooltip("ID", "Truth Commission ID"), 
+                                      filterInput = filterFX(element = "tab_tcs", 
+                                                            label = "All"),
+                                      width = 80),
+                country = colDef(name = "Country", minWidth = 140, 
+                                 filterInput = filterFX(element = "tab_tcs", label = "All countries")),
+                yearPassed = colDef(header = with_tooltip("Year", "Year Passed"), width = 110,
+                              filterInput = filterFX(element = "tab_tcs", label = "All years")), 
+                tcFitsDefinition = colDef(header = with_tooltip("TJ", "fits TJ definition"),
+                                          filterInput = filterFX(element = "tab_tcs"), 
+                                          width = 60),
+                # officialName = colDef(name = "Name", minWidth = 200),
+                officialName = colDef(show = FALSE, searchable = TRUE),
+                dateBeginOperation = colDef(header = with_tooltip("Began", "Year Began Operation"),
+                                            filterInput = filterFX(element = "tab_tcs", 
+                                                                   label = "All years"),
+                                            width = 110), 
+                dateCompleteOperation = colDef(header = with_tooltip("Completed", 
+                                                                     "Year Completed Operation"),
+                                               filterInput = filterFX(element = "tab_tcs", 
+                                                                      label = "All years"),
+                                               width = 125), 
+                dateReportIssued = colDef(header = with_tooltip("Report", "Year Report Issued"),
+                                          filterInput = filterFX(element = "tab_tcs", 
+                                                                 label = "All years"),
+                                          width = 110),
+                reportPubliclyAvailable = colDef(header = with_tooltip("Available", 
+                                                                       "Is the Report publicly available?"),
+                                                 filterInput = filterFX(element = "tab_tcs"),
+                                                 width = 110),
+                narrative = colDef(show = FALSE, searchable = TRUE)
+              ),
+              details = function(index) paste(df[index, "officialName"],
+                                              ": ",
+                                              df[index, "narrative"],
+                                              sep = "")
+  )
 ```
 
 ## Vetting
@@ -238,27 +617,38 @@ read_csv("_data/tcs.csv", skip = 1) %>%
 ``` {r}
 #| echo: false
 #| warning: false
-read_csv("_data/vettings.csv", skip = 1) %>% 
-  left_join(ctry, by = c(countryID = "countryid"), keep = FALSE) %>% 
-  reactableFX(element = "tab_vettings")
+df <- read_csv("_data/vettings.csv", skip = 1) %>% 
+  left_join(ctry, by = c(countryID = "countryid"), keep = FALSE) %>%
+  mutate(vettingFitsDefinition = ifelse(vettingFitsDefinition == 1, "yes", "no"), 
+         policyName = str_replace(policyName, country, ""),
+         policyName = str_replace(policyName, "ublic", ""),
+         policyName = str_replace(policyName, fixed("()"), ""),
+         policyName = str_squish(policyName), 
+         narrative = str_squish(narrative)) %>% 
+  select(vettingID, country, year, vettingFitsDefinition, policyName, narrative) 
+
+df %>% 
+  reactableFX(element = "tab_vettings",
+              defaultSorted = list(vettingID = "asc"),
+              columns = list(
+                vettingID = colDef(header = with_tooltip("ID", "Vetting ID"), 
+                                      filterInput = filterFX(element = "tab_vettings", 
+                                                            label = "All"),
+                                      width = 80),
+                country = colDef(name = "Country", minWidth = 140, 
+                                 filterInput = filterFX(element = "tab_vettings", label = "All countries")), 
+                year = colDef(name = "Year", width = 110,
+                              filterInput = filterFX(element = "tab_vettings", label = "All years")), 
+                vettingFitsDefinition = colDef(header = with_tooltip("TJ", "fits TJ definition"), 
+                                               filterInput = filterFX(element = "tab_vettings"), 
+                                               width = 60),
+                policyName = colDef(name = "Name", minWidth = 200),
+                narrative = colDef(show = FALSE, searchable = TRUE)
+              ),
+              details = function(index) paste(df[index, "narrative"])
+  )
 ```
 
 :::
-
-<!-- Click here to hide additional filtering options. -->
-
-<!-- Hover over each filtering option to see more information. -->
-
-<!-- Context: -->
-
-<!-- Filter by Keywords: -->
-
-<!-- War Context: -->
-
-<!-- Crimes Covered: -->
-
-<!-- Fits definition of TJ: -->
-
-<!-- Year: -->
 
 {{< include _footer.qmd >}}
