@@ -1,1 +1,1 @@
-Sitemap: https://tjetdata.github.io/TJRC/sitemap.xml
+Sitemap: https://transitionaljusticedata.com/sitemap.xml
