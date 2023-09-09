@@ -50,5 +50,3 @@ Truth Commission Coding Manual: [pdf](files/TruthCommissionCodingManual.pdf)
 ## Feedback and Corrections
 
 The Collaborative welcomes and encourages [Feedback](feedback.html) from country experts. With such feedback, we hope to continue to improve the currently available data. We will review your comments, research them, verify them, and make emendations if necessary.
-
-{{< include _footer.qmd >}}

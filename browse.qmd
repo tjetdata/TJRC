@@ -650,5 +650,3 @@ df %>%
 ```
 
 :::
-
-{{< include _footer.qmd >}}

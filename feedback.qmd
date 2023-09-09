@@ -4,5 +4,3 @@ editor: source
 ---
 
 Your feedback is highly appreciated. Please provide any feedback about the website or the data to Geoff Dancy at [geoff.dancy@utoronto.ca](mailto:geoff.dancy@utoronto.ca).
-
-{{< include _footer.qmd >}}

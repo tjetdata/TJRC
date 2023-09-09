@@ -120,5 +120,3 @@ Dancy, Geoff. 2019. "Achieving an Unpopular Balance: Colombian Post-Conflict Jus
 <!-- Dancy, Geoff and Oskar Timo Thoms. 2021. "Do Truth Commissions Improve Democracy?" Forthcoming in *Comparative Political Studies.* -->
 
 <!-- Dancy, Geoff and Kathryn Sikkink. 2021. "The Data of Transitional Justice." Forthcoming in *The Oxford Handbook of Transitional Justice*, eds. Jens Meierhenrich, Alexander Laban Hinton, and Lawrence Douglas. Oxford University Press. -->
-
-{{< include _footer.qmd >}}

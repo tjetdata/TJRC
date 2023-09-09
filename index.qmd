@@ -34,5 +34,3 @@ The Collaborative welcomes and encourages [Feedback](feedback.html) from country
 ![](images/am2_pie.jpg)
 
 ![](images/tc2_pie.jpg)
-
-{{< include _footer.qmd >}}
