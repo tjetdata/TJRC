@@ -219,5 +219,3 @@ Dan Kunitz (2012-2013)\
 Justin Schell (2013)\
 :::
 :::
-
-{{< include _footer.qmd >}}

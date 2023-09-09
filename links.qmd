@@ -18,6 +18,3 @@ editor: source
 [The International Center for Transitional Justice](https://www.ictj.org/)
 
 [Trial International, Geneva](https://trialinternational.org/)
-
-{{< include _footer.qmd >}}
-
