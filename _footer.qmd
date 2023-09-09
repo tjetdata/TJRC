@@ -12,4 +12,8 @@ Any opinions, findings, and conclusions or recommendations expressed in this mat
 
 [![](/images/nsf_logo.jpg){fig-alt="National Science Foundation"}](http://www.nsf.gov/) [![](/images/ahrc.jpg){fig-alt="Arts & Humanities Research Council"}](http://www.ahrc.ac.uk/Pages/Home.aspx) [![](/images/uofm.gif){fig-alt="University of Minnesota"}](http://www1.umn.edu/twincities/index.html) [![](/images/uoo.gif){fig-alt="University of Oxford"}](http://www.ox.ac.uk/)
 
+\
+
+This site was recreated by [Oskar Timo Thoms](https://oskarthoms.net) on behalf of TJET/TJRC with [Quarto](https://quarto.org/) and the [Reactable](https://glin.github.io/reactable/) package.
+
 :::

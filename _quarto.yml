@@ -8,7 +8,7 @@ format:
     df-print: kable
 
 website:
-  title: "Transitional Justice Research Collaborative"
+  title: "TJRC"
   search:
     location: navbar
     type: overlay
@@ -33,9 +33,3 @@ website:
       - href: links.qmd
         text: "Links"
   body-footer: _footer.qmd
-  page-footer:
-    right: |
-      This site was recreated by [Oskar Timo Thoms](https://oskarthoms.net) on behalf of TJET/TJRC and built with [Quarto](https://quarto.org/) and the [reactable](https://glin.github.io/reactable/) package.
-    border: true
-    background: light
-    foreground: black

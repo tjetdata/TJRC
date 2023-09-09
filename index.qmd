@@ -1,5 +1,6 @@
 ---
-title: "Home"
+pagetitle: Home
+title: "Transitional Justice Research Collaborative"
 editor: source
 ---
 
